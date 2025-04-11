@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.BlueCrown.Application.Model.AdminModel.AdminModel;
+import com.example.BlueCrown.Application.Model.AdminModel.Admin;
 
 @Repository
-public interface AdminRepo extends MongoRepository<AdminModel,String>{
+public interface AdminRepo extends MongoRepository<Admin,String>{
 
 	
-	 Optional<AdminModel>findByEmail(String email);
+	Optional<Admin> findByEmail(String email);
 
 	}
 

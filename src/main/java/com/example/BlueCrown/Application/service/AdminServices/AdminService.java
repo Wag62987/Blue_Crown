@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.example.BlueCrown.Application.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.Repository.AdminRepo;
@@ -19,24 +20,17 @@ import java.util.Optional;
 public class AdminService {
 
     @Autowired
-    private  AdminRepo AdminData;
-     
-    /////geting all admins//////////////
-    public List<AdminModel> getAllAdmins() {
-        return AdminData.findAll();
-    }
+    private static  AdminRepo Repo;
+
     //////////Creating new user/////////
-    public  AdminModel saveAdmin(AdminModel Admin) {
+    public  Admin saveAdmin(Admin Admin) {
     	System.out.println("service triggered");
-        return AdminData.save(Admin);
+        return Repo.save(Admin);
     }
 
-    ///////Checking if existe/////////////
-    public Optional<AdminModel> isExist(String email,String password) {
-      return AdminData.findByEmail(email).filter(admin->password!=null&&password.equals(admin.getPassword()));
+    public Admin getAdmin(AdminDTO adminDTO) {
+        return Repo.findByEmail(adminDTO.getEmail())
+                   .orElseThrow(() -> new AdminNotFound("Admin not found by email: " + adminDTO.getEmail()));
     }
-    public Optional<AdminModel> getAdminByEmail( String email){
-        return AdminData.findByEmail(email);
-    }		
 }
 

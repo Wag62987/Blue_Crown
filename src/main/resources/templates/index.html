@@ -3,37 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdminLogin</title>
+    <title>BlueCrown</title>
+    <link rel="stylesheet" href="/BlueCrown/src/main/resources/static/images/index.css">
 </head>
 <body>
-    <form id="LoginForm">
-        <label for="email">Email</label>
-        <input id="Email" name="email" placeholder="Enter email" type ="email" >
-        <label for="password">Password</label>
-        <input id="Pass" name="password" placeholder="Enter password" type="password">
-        <button type="submit">Log in</button>
-    </form>
+    <div id="Main">
+       <div id="Sidebar">
+            <h1>BlueCrown</h1>
+            <nav>
+                <ul>
+                    <li><a href="">Create Classroom</a></li>
+                    <li><a href="">Dashboard</a></li>
+                    <li><a href="">logout</a></li>
+                </ul>
+            </nav>
+       </div>
+
+       <div id="content">
+        <header ><h1 id="selectedOption">Dashboard</h1></header>
+        <iframe src="/BlueCrown/src/main/resources/templates/dashbord.html" frameborder="0"></iframe>
+       </div>
+      
+    </div>
 </body>
-<script>
-document.getElementById("LoginForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const email = document.getElementById("Email").value;
-            const password = document.getElementById("Pass").value;
-
-    const response= await fetch("http://localhost:8080/Admin/check",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        credentials:"include",
-        body:JSON.stringify({email,password})
-    })
-    const Result= await response.json();
-    if(response.ok){alert("success")
-        window.location.href=Result.redirect;}
-    else{alert("unnnnn");}
-});
-
-    
-</script>
 </html>

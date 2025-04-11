@@ -1,16 +1,20 @@
 package com.example.BlueCrown.Application.Model.AdminModel;
 
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 
 @Document(collection = "adminss")
 @TypeAlias("admin") 
-public class AdminModel {
+public class Admin {
   
 	@Id
     private String id;
@@ -24,12 +28,19 @@ public class AdminModel {
 
     private String password;
    
-
+    @DBRef
+    List<ClassroomModel> Classrooms;
   
-    public AdminModel() {
+    public List<ClassroomModel> getClassrooms() {
+        return Classrooms;
+    }
+    public void setClassrooms(List<ClassroomModel> classrooms) {
+        Classrooms = classrooms;
+    }
+    public Admin() {
         System.out.println("Admin created"+"email"+this.getEmail());
     }
-    public AdminModel(String email, String username, String password) {
+    public Admin(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;

@@ -10,11 +10,13 @@ import com.example.BlueCrown.Application.service.AdminServices.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import com.example.BlueCrown.Application.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
 
 import java.net.URI;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
@@ -32,31 +34,21 @@ public class AdminController {
 	 private AdminService service;
 
 
-   /////for creating new Admin//////////  
-   @PostMapping("/newAdmin")
-   public Boolean addAdmin(@RequestBody AdminModel am) {
-	   service.saveAdmin(am);
-	return true;
-	   
-   }
+     @PostMapping
+     ResponseEntity<String> addUser(@RequestBody Admin admin){
+        service.saveAdmin(admin);
+        return new ResponseEntity<>("Added",HttpStatus.FOUND);
 
-   /////for checking existance of Admin///
-  @PostMapping("/check")
-   public ResponseEntity<Map<String, String>> AdminExist(@RequestBody AdminDTO req,HttpSession session)
-   { 
-    if(service.isExist(req.getEmail(), req.getPassword()).isPresent()){
-        session.setAttribute("Admin",req.getEmail());
-        System.out.println("Session Set in Login: " + session.getAttribute("Admin"));
-        return ResponseEntity.ok(Map.of("redirect","Admin/Home"));}
-    else{
-        return ResponseEntity.status(401).body(Map.of("error", "Invalid Credentials"));
+     }
+
+     ResponseEntity<Admin> AuthUser(@RequestBody AdminDTO adminDTO)
+     {  try {
+        Admin Admin = service.getAdmin(adminDTO);
+        return ResponseEntity.ok(Admin); // or use HttpStatus.OK explicitly
+    } catch (AdminNotFound e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-    
-   }
- 
- 
-    
+     }
+
 }
    
-
-

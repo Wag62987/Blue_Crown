@@ -8,14 +8,15 @@ import org.springframework.stereotype.Component;
 
 public class AdminDTO implements Serializable{
    
+   private String email;
+   private String Password;
+   
  public AdminDTO(String email, String password) {
       this.email = email;
       Password = password;
    }
  public AdminDTO() {
    }
- private String email;
- private String Password;
  public String getEmail() {
     return email;
  }
