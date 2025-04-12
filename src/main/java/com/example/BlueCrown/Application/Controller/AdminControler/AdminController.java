@@ -37,8 +37,7 @@ public class AdminController {
      @PostMapping
      ResponseEntity<String> addUser(@RequestBody Admin admin){
         service.saveAdmin(admin);
-        return new ResponseEntity<>("Added",HttpStatus.FOUND);
-
+        return new ResponseEntity<>("Added",HttpStatus.CREATED);
      }
 
      ResponseEntity<Admin> AuthUser(@RequestBody AdminDTO adminDTO)

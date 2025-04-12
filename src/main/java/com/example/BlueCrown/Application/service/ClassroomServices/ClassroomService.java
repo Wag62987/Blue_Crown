@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.BlueCrown.Application.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.Admin;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.Repository.AdminRepo;
@@ -18,15 +19,14 @@ import com.example.BlueCrown.Application.service.AdminServices.AdminService;
 public class ClassroomService {
    
     private ClassroomRepo repo;
-    
+    AdminService  AdminService;
     List<ClassroomModel> GetAllClassroom(String email){
-        Optional<Admin> admin=AdminService.getAdminByEmail(email);
-      if(admin.isPresent()){
-        
-        Admin Admin=admin.get();
-        
-        return Admin.getClassrooms();
-    }
+      try{
+        Admin admin=AdminService.getByEmail(email);
+      }catch(AdminNotFound e){
+        return null;
+      }
+    
     return null;
     }
 

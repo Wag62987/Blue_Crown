@@ -20,14 +20,19 @@ import java.util.Optional;
 public class AdminService {
 
     @Autowired
-    private static  AdminRepo Repo;
+     private AdminRepo Repo;
 
     //////////Creating new user/////////
     public  Admin saveAdmin(Admin Admin) {
     	System.out.println("service triggered");
         return Repo.save(Admin);
     }
+    public  Admin getByEmail(String email){
 
+                        
+       return Repo.findByEmail(email)
+       .orElseThrow(()-> new AdminNotFound("new AdminNotFound(\"Admin not found by email: \" + adminDTO.getEmail())"));
+    }
     public Admin getAdmin(AdminDTO adminDTO) {
         return Repo.findByEmail(adminDTO.getEmail())
                    .orElseThrow(() -> new AdminNotFound("Admin not found by email: " + adminDTO.getEmail()));
