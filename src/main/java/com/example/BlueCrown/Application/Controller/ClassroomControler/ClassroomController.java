@@ -1,18 +1,24 @@
 package com.example.BlueCrown.Application.Controller.ClassroomControler;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
+import com.example.BlueCrown.Application.service.ClassroomServices.ClassroomService;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -21,9 +27,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/Classroom")
 public class ClassroomController {
    
+  ClassroomService service;
   @PostMapping()
-  public String addClassroom(@RequestBody ClassroomModel model) {
-      return new String();
+  public ResponseEntity<String> addClassroom(@RequestBody ClassroomModel classroom,HttpSession session) {
+
+      return service.addClassroom(classroom,(String)session.getAttribute("user"));
   }
 
   @PutMapping("{id}")
@@ -37,6 +45,11 @@ public class ClassroomController {
 
     return null;
   }
+  @GetMapping()
+  public List<ClassroomModel> getClassroom(HttpSession session) {
+      return service.GetAllClassroom( (String)session.getAttribute("user"));
+  }
+  
 
   
 

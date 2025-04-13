@@ -2,8 +2,6 @@ package com.example.BlueCrown.Application.Model.AdminModel;
 
 import java.io.Serializable;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.stereotype.Component;
 
 
 public class AdminDTO implements Serializable{

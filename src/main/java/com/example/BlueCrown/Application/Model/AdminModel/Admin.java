@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class Admin {
         return classrooms;
     }
     public void setClassrooms(List<ClassroomModel> classrooms) {
-        classrooms = classrooms;
+        this.classrooms = classrooms;
     }
     public Admin() {
         System.out.println("Admin created"+"email"+this.getEmail());
@@ -45,7 +44,7 @@ public class Admin {
         this.email = email;
         this.username = username;
         this.password = password;
-    }f
+    }
   
     public String getId() { return id; }
     public void setId(String id) {

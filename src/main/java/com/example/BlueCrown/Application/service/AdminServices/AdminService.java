@@ -8,12 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.BlueCrown.Application.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
-import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.Repository.AdminRepo;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @Component
@@ -28,7 +24,6 @@ public class AdminService {
         return Repo.save(Admin);
     }
     public  Admin getByEmail(String email){
-
                         
        return Repo.findByEmail(email)
        .orElseThrow(()-> new AdminNotFound("new AdminNotFound(\"Admin not found by email: \" + adminDTO.getEmail())"));
