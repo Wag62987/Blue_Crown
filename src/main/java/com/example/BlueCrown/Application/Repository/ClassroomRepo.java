@@ -10,6 +10,8 @@ import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 @Repository
 public interface ClassroomRepo extends MongoRepository<ClassroomModel,String> {
 
-    void deleteById(String Id);
+    ClassroomModel deleteById(String Id);
+
+    void setClassroomId(String id);
     
 }

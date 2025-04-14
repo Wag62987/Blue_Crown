@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-
-
 @CrossOrigin(value="*")
 @RestController
 @RequestMapping("/Classroom")
@@ -29,22 +27,22 @@ public class ClassroomController {
    
   ClassroomService service;
   @PostMapping()
-  public ResponseEntity<String> addClassroom(@RequestBody ClassroomModel classroom,HttpSession session) {
+  public ResponseEntity<?> addClassroom(@RequestBody ClassroomModel classroom,HttpSession session) {
 
       return service.addClassroom(classroom,(String)session.getAttribute("user"));
   }
 
-  @PutMapping("{id}")
-  public String putMethodName(@PathVariable String id) {
-      //TODO: process PUT request
+  @PutMapping()
+  public ResponseEntity<?> putMethodName(ClassroomModel classrrom) {
+      return service.UpdateClassroom(classrrom);
       
-      return "hello";
+
   }
   @DeleteMapping("{id}")
-  public String deleteClassroom(String id){
-
-    return null;
+  public ResponseEntity<?> deleteClassroom(String id,HttpSession session){
+  return service.deleteClassroom(id,(String) session.getAttribute("user"));
   }
+
   @GetMapping()
   public List<ClassroomModel> getClassroom(HttpSession session) {
       return service.GetAllClassroom( (String)session.getAttribute("user"));

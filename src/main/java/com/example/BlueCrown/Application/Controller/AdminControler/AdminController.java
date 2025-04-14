@@ -9,7 +9,7 @@ import com.example.BlueCrown.Application.service.AdminServices.AdminService;
 
 import jakarta.servlet.http.HttpSession;
 
-import com.example.BlueCrown.Application.AdminNotFound;
+import com.example.BlueCrown.Application.Exceptions.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
 
 
@@ -19,9 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
-
-
-
 
 
 @CrossOrigin(origins = "*")
@@ -38,15 +35,17 @@ public class AdminController {
         return new ResponseEntity<>("Added",HttpStatus.CREATED);
      }
      @PostMapping("/Login")
-     ResponseEntity<Admin> AuthUser(@RequestBody AdminDTO adminDTO ,HttpSession session)
-     {  try {
-        Admin Admin = service.getAdmin(adminDTO);
-        session.setAttribute("user",Admin.getEmail());
-        return ResponseEntity.ok(Admin); // or use HttpStatus.OK explicitly
-    } catch (AdminNotFound e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public ResponseEntity<Admin> authUser(@RequestBody AdminDTO adminDTO, HttpSession session) {
+        Admin admin = service.getAdmin(adminDTO); 
+        if (admin != null) {
+            session.setAttribute("user", admin.getEmail());
+            return ResponseEntity.ok(admin);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
-}
+
+
       @PostMapping("/Logout")
       ResponseEntity<Void> Logout(HttpSession session){  
             session.invalidate();

@@ -1,4 +1,4 @@
-package com.example.BlueCrown.Application;
+package com.example.BlueCrown.Application.Exceptions;
 
 public class AdminNotFound extends RuntimeException {
     

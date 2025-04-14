@@ -1,12 +1,14 @@
 package com.example.BlueCrown.Application.service.AdminServices;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.example.BlueCrown.Application.AdminNotFound;
+import com.example.BlueCrown.Application.Exceptions.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
 import com.example.BlueCrown.Application.Repository.AdminRepo;
 
@@ -23,14 +25,17 @@ public class AdminService {
     	System.out.println("service triggered");
         return Repo.save(Admin);
     }
-    public  Admin getByEmail(String email){
-                        
+    ///for get edmin
+    public  Admin getByEmail(String email){                  
        return Repo.findByEmail(email)
        .orElseThrow(()-> new AdminNotFound("new AdminNotFound(\"Admin not found by email: \" + adminDTO.getEmail())"));
     }
+
+    ///is admin exist
     public Admin getAdmin(AdminDTO adminDTO) {
-        return Repo.findByEmail(adminDTO.getEmail())
-                   .orElseThrow(() -> new AdminNotFound("Admin not found by email: " + adminDTO.getEmail()));
+    return Repo.findByEmail(adminDTO.getEmail())
+    .filter(admin -> admin.getPassword().equals(adminDTO.getPassword()))
+    .orElse(null);
     }
 }
 

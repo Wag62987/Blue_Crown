@@ -1,8 +1,14 @@
 package com.example.BlueCrown.Application.Model.ClassroomModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.example.BlueCrown.Application.Model.NotesModel.NotesModel;
 
 
 @Document(value="Classrooms")
@@ -12,7 +18,9 @@ public class ClassroomModel {
     private String classroomId;
     private String classroomName;
     private String classroomType;
-    
+    @DBRef
+     private List<NotesModel> NotesList=new ArrayList<>();
+
     public String getClassroomId() {
         return classroomId;
     }
@@ -31,13 +39,19 @@ public class ClassroomModel {
     public void setClassroomType(String classroomType) {
         this.classroomType = classroomType;
     }
+
+    public List<NotesModel> getNotesList() {
+        return NotesList;
+    }
+    public void setNotesList(List<NotesModel> notesList) {
+        NotesList = notesList;
+    }
+  
     @Override
     public String toString() {
         return "ClassroomModel [classroomId=" + classroomId + ", classroomName=" + classroomName + ", classroomType="
                 + classroomType + "]";
     }
-  
-   
   
     
 }
