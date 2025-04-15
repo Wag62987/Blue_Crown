@@ -9,7 +9,6 @@ import com.example.BlueCrown.Application.service.AdminServices.AdminService;
 
 import jakarta.servlet.http.HttpSession;
 
-import com.example.BlueCrown.Application.Exceptions.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
 
 
@@ -39,6 +38,7 @@ public class AdminController {
         Admin admin = service.getAdmin(adminDTO); 
         if (admin != null) {
             session.setAttribute("user", admin.getEmail());
+            System.out.println("Seesion id: "+session.getId());
             return ResponseEntity.ok(admin);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

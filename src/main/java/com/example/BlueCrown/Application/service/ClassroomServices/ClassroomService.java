@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
+import com.example.BlueCrown.Application.Model.AdminModel.Admin;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
+import com.example.BlueCrown.Application.Repository.AdminRepo;
 import com.example.BlueCrown.Application.Repository.ClassroomRepo;
 import com.example.BlueCrown.Application.service.AdminServices.AdminService;
 
@@ -17,7 +19,10 @@ import com.example.BlueCrown.Application.service.AdminServices.AdminService;
 public class ClassroomService {
    @Autowired
     private ClassroomRepo repo;
+    @Autowired
     AdminService  AdminService;
+    @Autowired
+    AdminRepo adminRepo;
     ///geting All classroom list
     public List<ClassroomModel> GetAllClassroom(String email){
       return AdminService.getByEmail(email).getClassrooms();
@@ -26,7 +31,11 @@ public class ClassroomService {
     //Add Clasroom
     public ResponseEntity<?> addClassroom(ClassroomModel classroom, String email) {
       repo.save(classroom);
-      return new ResponseEntity<>( AdminService.getByEmail(email).getClassrooms().add(classroom),HttpStatus.ACCEPTED);
+      Admin admin=AdminService.getByEmail(email);
+      System.out.println(admin);
+      admin.getClassrooms().add(classroom);
+      adminRepo.save(admin);
+      return new ResponseEntity<>(HttpStatus.CREATED);
   }
    
     //Upadte Classroom
@@ -40,8 +49,16 @@ public class ClassroomService {
     }
     //Delete Classroom
     public ResponseEntity<?> deleteClassroom(String id,String email){
-      ClassroomModel classroom= repo.deleteById(id);
+      if(repo.existsById(id)){
+     Optional<ClassroomModel> OPclass=repo.findById(id);
+     ClassroomModel classroom =OPclass.get();
+      repo.delete(classroom);
       return new ResponseEntity<>(AdminService.getByEmail(email).getClassrooms().remove(classroom),HttpStatus.OK);
+      }
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    public ClassroomModel getClassroomById(String id){
+      return repo.findById(id);
     }
 
 
