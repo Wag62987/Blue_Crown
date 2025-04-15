@@ -37,7 +37,7 @@ public class ClassroomService {
       adminRepo.save(admin);
       return new ResponseEntity<>(HttpStatus.CREATED);
   }
-   
+
     //Upadte Classroom
     public ResponseEntity<?> UpdateClassroom(ClassroomModel UpdatedClassroom){
       Optional<ClassroomModel> classroom=repo.findById(UpdatedClassroom.getClassroomId());
@@ -57,8 +57,13 @@ public class ClassroomService {
       }
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
     public ClassroomModel getClassroomById(String id){
-      return repo.findById(id);
+      Optional<ClassroomModel> Class= repo.findById(id); 
+      if(!Class.isPresent())
+       return null;
+      ClassroomModel classroom=Class.get();
+       return classroom;
     }
 
 

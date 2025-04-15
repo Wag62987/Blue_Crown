@@ -26,14 +26,11 @@ public class NotesService {
     ///adding notes in Database
     public ResponseEntity<?> saveNotes(NotesModel notes, String id)
     {
-        Optional<ClassroomModel> classroom=ClassroomService.getClassroomById(id);
-            ClassroomModel classroom=ClassroomService.getClassroomById(id).get();
+       ClassroomModel classroom = ClassroomService.getClassroomById(id);
+        if(classroom==null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
             System.out.print(classroom);
             notesRepo.save(notes);
-           Optional<ClassroomModel> classroom= ClassroomService.getClassroomById(id);
-            ClassRepo.save(classroom);
+            ClassroomService.UpdateClassroom(classroom);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        
-    return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-    }
+            }
 }
