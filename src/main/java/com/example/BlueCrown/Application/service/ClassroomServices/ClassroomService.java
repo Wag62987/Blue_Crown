@@ -52,8 +52,10 @@ public class ClassroomService {
       if(repo.existsById(id)){
      Optional<ClassroomModel> OPclass=repo.findById(id);
      ClassroomModel classroom =OPclass.get();
+      
       repo.delete(classroom);
-      return new ResponseEntity<>(AdminService.getByEmail(email).getClassrooms().remove(classroom),HttpStatus.OK);
+      AdminService.getByEmail(email).getClassrooms().remove(classroom);
+      return new ResponseEntity<>(HttpStatus.OK);
       }
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

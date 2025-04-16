@@ -33,4 +33,8 @@ public class NotesService {
             ClassroomService.UpdateClassroom(classroom);
             return new ResponseEntity<>(HttpStatus.CREATED);
             }
+
+    public void DeleteNotes(ClassroomModel classroom) {
+        classroom.getNotesList().removeAll(classroom.getNotesList());
+    }
 }

@@ -40,8 +40,8 @@ public class NotesControler {
      
     }
 
-    public String DeleteNotes(){
-        return "Done";
+    public void DeleteAllNotes(ClassroomModel classroom){
+        service.DeleteNotes(classroom);
     }
     
 }

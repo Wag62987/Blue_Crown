@@ -35,7 +35,9 @@ public class AdminController {
      }
      @PostMapping("/Login")
     public ResponseEntity<Admin> authUser(@RequestBody AdminDTO adminDTO, HttpSession session) {
+        System.out.println("Login processing ");
         Admin admin = service.getAdmin(adminDTO); 
+        System.out.println(admin);
         if (admin != null) {
             session.setAttribute("user", admin.getEmail());
             System.out.println("Seesion id: "+session.getId());

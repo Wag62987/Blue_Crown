@@ -15,12 +15,7 @@ public class AdminViewController {
 
     @GetMapping("/Admin/Home")
     public String getHome(HttpSession session) {
-        System.out.println("home triggerd");
-       if(session.getAttribute("Admin")!=null){
-    	 System.out.println("Home Session: "+session.getAttribute("Admin"));
-       return "Home";
-       }else{ return "/";}
-       
+       return null;
     }
     
 }
