@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.BlueCrown.Application.Exceptions.AdminNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.*;
 import com.example.BlueCrown.Application.Repository.AdminRepo;
-
+/*
+ * Admin Services
+ */
 
 @Service
 @Component

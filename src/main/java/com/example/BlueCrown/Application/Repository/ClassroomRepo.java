@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 
+/*
+ * Repository of Classroom
+ */
 @Repository
 public interface ClassroomRepo extends MongoRepository<ClassroomModel,String> {
 

@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
 import com.example.BlueCrown.Application.Model.AdminModel.Admin;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
-import com.example.BlueCrown.Application.Repository.AdminRepo;
 import com.example.BlueCrown.Application.Repository.ClassroomRepo;
 import com.example.BlueCrown.Application.service.AdminServices.AdminService;
+
+/*
+ * Classroom services
+ */
 
 @Service
 public class ClassroomService {
@@ -21,8 +24,7 @@ public class ClassroomService {
     private ClassroomRepo repo;
     @Autowired
     AdminService  AdminService;
-    @Autowired
-    AdminRepo adminRepo;
+
     ///geting All classroom list
     public List<ClassroomModel> GetAllClassroom(String email){
       return AdminService.getByEmail(email).getClassrooms();
@@ -34,7 +36,7 @@ public class ClassroomService {
       Admin admin=AdminService.getByEmail(email);
       System.out.println(admin);
       admin.getClassrooms().add(classroom);
-      adminRepo.save(admin);
+      AdminService.saveAdmin(admin);
       return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
@@ -60,6 +62,7 @@ public class ClassroomService {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    //geting Classroom by Classroom ID
     public ClassroomModel getClassroomById(String id){
       Optional<ClassroomModel> Class= repo.findById(id); 
       if(!Class.isPresent())

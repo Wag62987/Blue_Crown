@@ -19,20 +19,25 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+/*
+ * Controler for Admins
+ */
 
 @CrossOrigin(origins = "*")
 @RestController // Converts all responses to JSON
-@RequestMapping("/Admin") // Base URL for all endpoints
+@RequestMapping("/Admin")
 public class AdminController {
     @Autowired
 	 private AdminService service;
 
-
+    // Adding new user
      @PostMapping
      ResponseEntity<String> addUser(@RequestBody Admin admin){
         service.saveAdmin(admin);
         return new ResponseEntity<>("Added",HttpStatus.CREATED);
      }
+
+     //check Admin exist or not
      @PostMapping("/Login")
     public ResponseEntity<Admin> authUser(@RequestBody AdminDTO adminDTO, HttpSession session) {
         System.out.println("Login processing ");
@@ -47,7 +52,7 @@ public class AdminController {
         }
     }
 
-
+    // functionality for logut
       @PostMapping("/Logout")
       ResponseEntity<Void> Logout(HttpSession session){  
             session.invalidate();

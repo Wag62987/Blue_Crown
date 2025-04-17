@@ -21,14 +21,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+/*
+ * Controller for Classroom
+ */
 
 @CrossOrigin(value="*")
 @RestController
-@RequestMapping("/Classroom")
+@RequestMapping("/Admin/Classroom")
 public class ClassroomController {
-   @Autowired
+
+  @Autowired
   ClassroomService service;
+
+  // for Add new Classroom
   @PostMapping()
   public ResponseEntity<?> addClassroom(@Valid @RequestBody() ClassroomModel classroom,HttpSession session) {
     System.out.println("Add CLassroom COntroller");
@@ -39,17 +44,20 @@ public class ClassroomController {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
+  //Updating classroom
   @PutMapping()
   public ResponseEntity<?> putMethodName(ClassroomModel classrrom) {
       return service.UpdateClassroom(classrrom);
       
 
   }
+  // Deleting classroom
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteClassroom(@PathVariable String id,HttpSession session){
   return service.deleteClassroom(id,(String) session.getAttribute("user"));
   }
 
+  // geting list of classroom
   @GetMapping()
   public List<ClassroomModel> getClassroom(HttpSession session) {
       return service.GetAllClassroom( (String)session.getAttribute("user"));
