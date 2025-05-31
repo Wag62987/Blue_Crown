@@ -28,7 +28,6 @@ public class AdminService implements UserDetailsService{
 
     //////////Creating new user/////////
     public  void saveAdmin(Admin Admin) {
-    	System.out.println("service triggered");
        Repo.save(Admin);
     }
     ///for get edmin
@@ -45,7 +44,6 @@ public class AdminService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {        
          Optional<Admin> opadmin=Repo.findBy(username);
          Admin admin=opadmin.get();
-         System.out.println(admin);
          if(admin!=null)
          { 
             return User.builder()

@@ -43,7 +43,6 @@ public class AdminController {
      public String dashboard(Model model){
       String username=SecurityContextHolder.getContext().getAuthentication().getName();
       Admin admin=service.getInfoByUsername(username);
-      System.out.println(admin.getClassrooms());
       model.addAttribute("Classroom_List", admin.getClassrooms());
         return"dashboard";
         }
@@ -60,7 +59,6 @@ public class AdminController {
         }
         @GetMapping("/Notesview/{id}")
         public String notesview(@PathVariable("id") String classId,Model model) {
-          System.out.println(classId);
           model.addAttribute("ClassId", classId);
             return "Notesview";
         }

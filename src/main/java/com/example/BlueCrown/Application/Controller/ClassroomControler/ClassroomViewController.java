@@ -25,8 +25,7 @@ class ClasroomViewController{
   // for Add new Classroom
   @PostMapping("/addClassroom")
   public String addClassroom(@ModelAttribute ClassroomModel classroom) {
-    System.out.println("Add CLassroom Controller");
-    System.out.println(classroom);
+   
     service.addClassroom(classroom);
     return "CreateClassroom";
   }

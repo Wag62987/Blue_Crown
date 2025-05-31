@@ -39,13 +39,11 @@ public class NotesControler {
     public ResponseEntity<?> UploadNotes(@RequestParam("file") MultipartFile file,@PathVariable("ClassroomId") String id)throws IOException{
       NotesModel notes=new NotesModel(file.getOriginalFilename(),file.getContentType(),file.getBytes());  
       ClassroomModel classroom=ClassroomService.getClassroomById(id);
-      System.out.println("invoked");
+     
       if(classroom==null){
-        System.out.println("classroom not found");
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
       else{
-        System.out.println("saving notes");
         service.saveNotes(notes, classroom);
         return new ResponseEntity<>(HttpStatus.CREATED); 
       }
@@ -54,8 +52,6 @@ public class NotesControler {
     //Geting list of notes of Classroom
     @GetMapping()
     public ResponseEntity<List<NotesModel>> getAllNotes(@PathVariable("ClassroomId") String classId){
-      System.out.println("fetching notes");
-      System.out.println("classroom id:"+classId);
       List<NotesModel> list=new ArrayList<>();
       if((list=service.getNotelist(classId) )!=null){
 
@@ -69,8 +65,7 @@ public class NotesControler {
     //Deleting of notes 
     @DeleteMapping("/{noteid}")
     public ResponseEntity<?> DeleteNote(@PathVariable("ClassroomId") String Classid,@PathVariable("noteid") String noteId){
-      System.out.println("delete invoked");
-      System.out.println("Note to be deleted"+noteId);
+    
       return  ClassroomService.deleteNote(Classid,noteId);
 
     }

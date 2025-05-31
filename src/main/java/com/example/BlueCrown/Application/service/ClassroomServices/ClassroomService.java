@@ -43,7 +43,6 @@ public class ClassroomService {
     @Transactional
     public ResponseEntity<?> addClassroom(ClassroomModel classroom) {
       Admin admin=user.getCurrentUser();
-      System.out.println(admin);
       repo.save(classroom); 
       admin.getClassrooms().add(classroom);
       AdminService.saveAdmin(admin);
@@ -55,7 +54,6 @@ public class ClassroomService {
     public ResponseEntity<?> deleteClassroom(String id) throws ClassroomNotFound{
     	Admin admin=user.getCurrentUser();
     	ClassroomModel classroom=getClassroomById(id);
-      System.out.println("Classroom have to be deleted"+classroom);
     	if(classroom==null) {
     		return new ResponseEntity<>(new ClassroomNotFound("Class not Found !!!"),HttpStatus.NOT_FOUND);
     	}
@@ -97,16 +95,13 @@ public class ClassroomService {
     }
     public ResponseEntity<?> deleteNote(String ClassId,String NoteId){
       boolean find=false;
-      System.out.println("delelte Sevice invoked");
     	ClassroomModel classroom=getClassroomById(ClassId);
     	if(classroom==null) {
     		return new ResponseEntity<>(new ClassroomNotFound("Class not Found !!!"),HttpStatus.NOT_FOUND);
     	}
     	else {
     		for (NotesModel note : classroom.getNotesList()) {
-          System.out.println("Note in loop"+note);
           if(note.getId().equals(NoteId)){
-           System.out.println(" note:"+note);
     			  classroom.getNotesList().remove(note);
     		  	repo.save(classroom);
     			  Nservice.DeleteNote(note);

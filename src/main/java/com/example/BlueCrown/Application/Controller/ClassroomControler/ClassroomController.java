@@ -38,8 +38,6 @@ public class ClassroomController {
 
   @PostMapping()
   public String addClassroom(@ModelAttribute ClassroomModel classroom) {
-    System.out.println("Add CLassroom COntroller");
-    System.out.println(classroom);
     if(classroom!=null)
       service.addClassroom(classroom);
       return "dashboard";
@@ -48,7 +46,6 @@ public class ClassroomController {
   //Updating classroom
   @PutMapping("/{id}")
   public ResponseEntity<?> putMethodName(@PathVariable("id") String classid, @RequestBody ClassroomModel classroom) {
-    System.out.println("Upadted"+classroom);
     if(service.isExist(classid))
       return service.UpdateClassroom(classroom,classid);
       return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -56,7 +53,6 @@ public class ClassroomController {
   // Deleting classroom
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteClassroom(@PathVariable String id) throws ClassroomNotFound{
-    System.out.println("delet control invoked");
   return service.deleteClassroom(id);
   }
 

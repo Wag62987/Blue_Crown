@@ -31,7 +31,7 @@ public class NotesService {
     //Adding new Notes
     @Transactional
     public ResponseEntity<?> saveNotes(NotesModel notes, ClassroomModel classroom)
-    {       System.out.println(classroom);
+    {  
         if(classroom==null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
         else{
             notesRepo.save(notes);

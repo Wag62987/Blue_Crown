@@ -39,7 +39,6 @@ public class Admin {
         this.classrooms = classrooms;
     }
     public Admin() {
-        // System.out.println("Admin created"+"email"+this.getEmail());
     }
     public Admin(String email, String username, String password) {
         this.email = email;
@@ -49,12 +48,11 @@ public class Admin {
   
     public String getId() { return id; }
     public void setId(String id) {
-        System.out.println("id"+id);
          this.id = id; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) {
-        System.out.println("mail"+email); this.email = email; }
+         this.email = email; }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
