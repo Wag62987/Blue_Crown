@@ -1,9 +1,14 @@
 package com.example.BlueCrown.Application.service.AdminServices;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-
-
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +21,41 @@ import com.example.BlueCrown.Application.Repository.AdminRepo;
 
 @Service
 @Component
-public class AdminService {
+public class AdminService implements UserDetailsService{
 
     @Autowired
-     private AdminRepo Repo;
+    private AdminRepo Repo;
 
     //////////Creating new user/////////
-    public  Admin saveAdmin(Admin Admin) {
+    public  void saveAdmin(Admin Admin) {
     	System.out.println("service triggered");
-        return Repo.save(Admin);
+       Repo.save(Admin);
     }
     ///for get edmin
     public  Admin getByEmail(String email){                  
        return Repo.findByEmail(email)
        .orElseThrow(()-> new AdminNotFound("new AdminNotFound(\"Admin not found by email: \" + adminDTO.getEmail())"));
     }
+    public Admin getInfoByUsername(String username){
+       Optional<Admin> ad=Repo.findBy(username);
+       return ad.get();
+    }
 
-    ///is admin exist
-    public Admin getAdmin(AdminDTO adminDTO) {
-    return Repo.findByEmail(adminDTO.getEmail())
-    .filter(admin -> admin.getPassword().equals(adminDTO.getPassword()))
-    .orElse(null);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {        
+         Optional<Admin> opadmin=Repo.findBy(username);
+         Admin admin=opadmin.get();
+         System.out.println(admin);
+         if(admin!=null)
+         { 
+            return User.builder()
+            .username(admin.getUsername())
+            .password(new BCryptPasswordEncoder().encode(admin.getPassword()))
+            .build();
+         }
+         else{
+            throw new UsernameNotFoundException("User not found");
+         }
     }
 }
 

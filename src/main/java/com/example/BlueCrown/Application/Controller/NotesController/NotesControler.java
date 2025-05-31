@@ -1,6 +1,7 @@
 package com.example.BlueCrown.Application.Controller.NotesController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,35 +30,61 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class NotesControler {
 
     @Autowired
-    NotesService service;
+    private  NotesService service;
     @Autowired
-    ClassroomService ClassroomService;
+    private ClassroomService ClassroomService;
 
     // Adding new Notes in classroom
     @PostMapping("/UploadNotes")
-    public ResponseEntity<?> UploadNotes(@RequestParam("file") MultipartFile file,@PathVariable("id") String id)throws IOException{
+    public ResponseEntity<?> UploadNotes(@RequestParam("file") MultipartFile file,@PathVariable("ClassroomId") String id)throws IOException{
       NotesModel notes=new NotesModel(file.getOriginalFilename(),file.getContentType(),file.getBytes());  
-      service.saveNotes(notes,id);  
       ClassroomModel classroom=ClassroomService.getClassroomById(id);
-      if(classroom==null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
-      classroom.getNotesList().add(notes);
-      ClassroomService.UpdateClassroom(classroom);
-        
+      System.out.println("invoked");
+      if(classroom==null){
+        System.out.println("classroom not found");
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+      else{
+        System.out.println("saving notes");
+        service.saveNotes(notes, classroom);
         return new ResponseEntity<>(HttpStatus.CREATED); 
+      }
     }
     
     //Geting list of notes of Classroom
     @GetMapping()
-    public List<NotesModel> getAllNotes(@PathVariable("ClassroomId") String classId){
-     return service.getNotelist(classId);
+    public ResponseEntity<List<NotesModel>> getAllNotes(@PathVariable("ClassroomId") String classId){
+      System.out.println("fetching notes");
+      System.out.println("classroom id:"+classId);
+      List<NotesModel> list=new ArrayList<>();
+      if((list=service.getNotelist(classId) )!=null){
+
+        return ResponseEntity.ok(list);
+      }
+      else{
+        return ResponseEntity.ok(list);
+      }
     }
   
     //Deleting of notes 
-    @DeleteMapping("/{noteid}/")
-    public ResponseEntity<?> DeleteNote(@PathVariable("id") String Classid,@PathVariable("noteid") String noteId){
-     
-      return  service.DeleteNote(Classid,noteId);
+    @DeleteMapping("/{noteid}")
+    public ResponseEntity<?> DeleteNote(@PathVariable("ClassroomId") String Classid,@PathVariable("noteid") String noteId){
+      System.out.println("delete invoked");
+      System.out.println("Note to be deleted"+noteId);
+      return  ClassroomService.deleteNote(Classid,noteId);
 
     }
-    
+    @GetMapping("/View/{noteId}")
+public ResponseEntity<byte[]> viewNote(@PathVariable("ClassroomId") String classId, @PathVariable("noteId") String noteId) {
+    NotesModel note = service.getNoteById(noteId); // implement this if missing
+
+    if (note == null) {
+        return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok()
+        .header("Content-Disposition", "inline; filename=\"" + note.getTitle() + "\"")
+        .header("Content-Type", note.getContentType())
+        .body(note.getData());
+}
 }

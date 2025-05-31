@@ -1,5 +1,7 @@
 package com.example.BlueCrown.Application.Model.NotesModel;
 
+import java.util.Arrays;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -49,5 +51,10 @@ public class NotesModel {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "NotesModel [id=" + id + ", title=" + title + ", contentType=" + contentType + "]";
     }
 }

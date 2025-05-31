@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.BlueCrown.Application.Model.NotesModel.NotesModel;
+import com.mongodb.lang.Nullable;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +16,7 @@ import jakarta.validation.constraints.NotNull;
 @Document(value="Classrooms")
 @TypeAlias("classroom")
 public class ClassroomModel {
+	
     @Id
     private String classroomId;
     @NotNull
@@ -22,6 +24,7 @@ public class ClassroomModel {
     @NotNull
     private String classroomType;
     @DBRef
+    @Nullable
      private List<NotesModel> NotesList=new ArrayList<>();
 
     public String getClassroomId() {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BlueCrown</title>
+    <link rel="stylesheet" th:href="@{/dashbord.css}" />
+    <link rel="stylesheet" th:href="@{/CreateClassroom.css}"/>
+</head>
+<body>
+    <div id="Main">
+       <div id="Sidebar">
+            <h1>BlueCrown</h1>
+            <nav>
+                <ul>
+                    <!-- Use single quotes inside onclick to avoid conflicts -->
+                    <li><a href="/Admin/profile">Profile</a></li>
+                    <li><a href="/Admin/CreateClassroom">Create Classroom</a></li>
+                    <li><a href="/Admin/dashboard">Dashboard</a></li>
+                   
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+       </div>
+
+       <div id="content">
+        <header><h1 id="selectedOption">Update Classroom</h1></header>
+        <section>
+             <div id="Class-detail-box">
+                
+            <form id="Form">
+            <label for="classroomName">Enter Name</label>
+            <input type="text" name="classroomName" required>
+            <label for="classroomType">Type of Classroom</label>
+            <div id="Type-class-box" >
+                <div class="type-box">
+                    <input type="radio" value="Public" name="classroomType" required>
+                    <label for="public">Public</label>
+                </div>
+                <div class="type-box">
+
+                    <input type="radio" value="Private" name="classroomType" >
+                    <label for="private">Private</label>
+                </div>
+            </div>
+           
+            <input type="submit" value="Update"  id="submit-but"> 
+       </form>
+        </div>
+      
+        </section>
+       
+        </div>
+       </div>
+    </div>
+
+
+</body>
+<script>
+    document.getElementById("Form").addEventListener("submit",(e)=>{
+        e.preventDefault();
+       const classroomName = document.getElementsByName("classroomName")[0].value;
+const classroomTypeInputs = document.getElementsByName("classroomType");
+let selectedValue = null;
+
+for (let input of classroomTypeInputs) {
+  if (input.checked) {
+    selectedValue = input.value;
+    break;
+  }
+}
+        const classroomId="[[${id}]]";
+        const notes= null;
+
+        const classroom={
+           classroomId:classroomId,
+           classroomName:classroomName,
+            classroomType:selectedValue,
+            notes:notes
+        }
+        fetch(`/Admin/Classrooms/${classroomId}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(classroom)
+        }).then(data=>{
+            alert(JSON.stringify(classroom));
+            alert("Updated"+classroomId)
+        }).catch(error=>{
+            alert("Enable to update")
+        })
+        
+    })
+   
+</script>
+</html>

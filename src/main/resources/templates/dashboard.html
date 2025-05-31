@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BlueCrown</title>
+    <link rel="stylesheet" th:href="@{/dashbord.css}" />
+</head>
+<body>
+    <div id="Main">
+       <div id="Sidebar">
+            <h1>BlueCrown</h1>
+            <nav>
+                <ul>
+                    <!-- Use single quotes inside onclick to avoid conflicts -->
+                    <li><a href="/Admin/profile">Profile</a></li>
+                    <li><a href="/Admin/CreateClassroom" >Create Classroom</a></li>
+                    <li><a href="/Admin/dashboard">Dashboard</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+       </div>
+
+       <div id="content">
+        <header><h1 id="selectedOption">Dashboard</h1></header>
+        <!-- Changed iframe to a div for content injection -->
+        <div id="displayContent">
+         <h1>Classrooms</h1>
+         <ul id="Classroom-list"></ul>
+        </div>
+       </div>
+    </div>
+
+
+</body>
+<script>
+    const notes=undefined;
+  fetch("/Admin/Classrooms")
+    .then(response => response.json())
+    .then(data => {
+        const list = document.getElementById("Classroom-list");
+         if (!data || data.length === 0) {
+      console.log("empty");
+      
+      list.innerHTML="<h1>No Classroom is created  yet</h1>";
+         }
+        data.forEach(classroom => {
+            const item = document.createElement("li");
+            const box=document.createElement("div");
+            item.innerHTML = `<section id="Classroom-info"><h4>Name: ${classroom.classroomName}</h4><br><h4>Type: ${classroom.classroomType}</h4><br></section>`;
+
+            // Create the button for classroom
+            const but1 = document.createElement("button");
+            const but2=document.createElement("button");
+            const updateBut=document.createElement("button");
+            const BinBut=document.createElement("button");
+
+            but1.textContent = "view Notes";
+            but2.textContent="Upload notes"
+            updateBut.textContent="Update Classroom"
+            BinBut.textContent="Delete Classroom"
+            const id=classroom.classroomId;
+           
+            but1.onclick = ()=>{
+                 console.log(id);
+                 window.location.href=`/Admin/Notesview/${id}`;
+                
+            }
+            but2.onclick=()=>{
+                window.location.href=`/Admin/Classroom/${id}/Notes/NotesUploading`;
+            }
+            updateBut.onclick=()=>{
+                console.log("before upadte:"+id)
+                window.location.href=`/Admin/Classroom/Update/${id}`;
+            }
+            BinBut.onclick=()=>{
+                fetch(`/Admin/Classrooms/${id}`,{
+                    method:"DELETE"
+                }).then(data=>
+                {
+                    list.removeChild(item);
+                    alert("classroom deleted");
+
+                }
+                ).catch(error=>{
+                    alert("Not deleted")
+                })
+                
+            }
+
+            item.id="Classroom";
+            box.id="Classroom-but-box";
+            BinBut.id="Bin-but";
+            BinBut.style.backgroundColor="red";
+           
+            box.appendChild(but1);
+            box.appendChild(but2);
+            box.appendChild(updateBut)
+            box.appendChild(BinBut)
+            item.appendChild(box)
+            list.appendChild(item);
+           
+        });
+    })
+    .catch(error => {
+        console.error("Error in fetching classroom:", error);
+    });
+
+     console.log(notes);
+   
+</script>
+</html>

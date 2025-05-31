@@ -5,21 +5,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.service.ClassroomServices.ClassroomService;
 
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 /*
  * Controller for Classroom
@@ -27,44 +29,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @CrossOrigin(value="*")
 @RestController
-@RequestMapping("/Admin/Classroom")
+@Controller
+@RequestMapping("/Admin/Classrooms")
 public class ClassroomController {
 
   @Autowired
-  ClassroomService service;
+   private ClassroomService service;
 
-  // for Add new Classroom
   @PostMapping()
-  public ResponseEntity<?> addClassroom(@Valid @RequestBody() ClassroomModel classroom,HttpSession session) {
+  public String addClassroom(@ModelAttribute ClassroomModel classroom) {
     System.out.println("Add CLassroom COntroller");
     System.out.println(classroom);
-
     if(classroom!=null)
-      return service.addClassroom(classroom,(String)session.getAttribute("user"));
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      service.addClassroom(classroom);
+      return "dashboard";
   }
 
   //Updating classroom
-  @PutMapping()
-  public ResponseEntity<?> putMethodName(ClassroomModel classrrom) {
-      return service.UpdateClassroom(classrrom);
-      
-
+  @PutMapping("/{id}")
+  public ResponseEntity<?> putMethodName(@PathVariable("id") String classid, @RequestBody ClassroomModel classroom) {
+    System.out.println("Upadted"+classroom);
+    if(service.isExist(classid))
+      return service.UpdateClassroom(classroom,classid);
+      return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
   }
   // Deleting classroom
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteClassroom(@PathVariable String id,HttpSession session){
-  return service.deleteClassroom(id,(String) session.getAttribute("user"));
+  public ResponseEntity<?> deleteClassroom(@PathVariable String id) throws ClassroomNotFound{
+    System.out.println("delet control invoked");
+  return service.deleteClassroom(id);
   }
 
   // geting list of classroom
   @GetMapping()
-  public List<ClassroomModel> getClassroom(HttpSession session) {
-      return service.GetAllClassroom( (String)session.getAttribute("user"));
+  public ResponseEntity<List<ClassroomModel>> getClassroom() {
+    return ResponseEntity.ok(service.getUserClassroom());
   }
   
-
-  
-
-
         }

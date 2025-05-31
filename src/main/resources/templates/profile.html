@@ -1,0 +1,104 @@
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BlueCrown</title>
+    <link rel="stylesheet" href="dashboard.css"  />
+    <link rel="stylesheet" th:href="@{/profile.css}">
+</head>
+<body>
+    <div id="Main">
+       <div id="Sidebar">
+            <h1>BlueCrown</h1>
+            <nav>
+                <ul>
+                    Use single quotes inside onclick to avoid conflicts
+                    <li><a href="profile" onclick='displayContent("/Profile"); return false;'>Profile</a></li>
+                    <li><a href="#" onclick='displayContent("/CreateClassroom"); return false;'>Create Classroom</a></li>
+                    <li><a href="#" onclick='displayContent("/Dashboard"); return false;'>Dashboard</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+       </div>
+
+       <div id="content">
+        <header><h1 id="selectedOption">Profile</h1></header>
+        Changed iframe to a div for content injection
+        <div id="displayContent">
+            Main Content-->
+  
+
+      <!-- <div class="content-box">
+        <div class="profile-section">
+          <div class="profile-image">
+            <img src="" alt="User Photo" />
+          </div>
+          <div class="profile-details">
+           <p><strong>Name:</strong> <span th:text="${username}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${email}"></span></p>
+
+            <p><strong>Role:</strong> Teacher</p>
+            <p><strong>Username:</strong> johndoe24</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Joined:</strong> Jan 2024</p>
+          </div>
+        </div>
+      </div> -->
+    <!-- </main>
+        </div>
+       </div>
+    </div>
+
+   
+  </div>
+  </body>
+  </html> -->
+ 
+<!DOCTYPE html>
+<html lang="en" xmlns="http://wwww.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BlueCrown</title>
+    <link rel="stylesheet" th:href="@{/profile.css}" />
+</head>
+<body>
+    <div id="Main">
+       <div id="Sidebar">
+            <h1>BlueCrown</h1>
+            <nav>
+                <ul>
+                    <!-- Use single quotes inside onclick to avoid conflicts -->
+                    <li><a href="/Admin/profile">Profile</a></li>
+                    <li><a href="/Admin/CreateClassroom">Create Classroom</a></li>
+                    <li><a href="/Admin/dashboard">Dashboard</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+       </div>
+
+       <div id="content">
+        <header><h1 id="selectedOption">Profile</h1></header>
+        <!-- Changed iframe to a div for content injection -->
+        <div id="displayContent">
+           <div class="content-box">
+        <div class="profile-section">
+          <div class="profile-image">
+            <img src="" alt="User Photo" />
+          </div>
+          <div class="profile-details">
+           <p><strong>Name:</strong> <span th:text="${Username}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${Email}"></span></p>
+
+            <p><strong>Total Classroom:</strong> <span th:text="${classrooms}"></span></p>
+          </div>
+        </div>
+      </div>
+        </div>
+       </div>
+    </div>
+
+
+</body>
+</html>
