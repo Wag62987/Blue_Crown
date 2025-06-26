@@ -1,6 +1,5 @@
 package com.example.BlueCrown.Application.Model.NotesModel;
 
-import java.util.Arrays;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

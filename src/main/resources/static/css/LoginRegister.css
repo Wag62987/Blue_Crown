@@ -1,0 +1,129 @@
+body{
+    height: 650px;
+    width:98vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: #0b0f1a; */
+    color: #e6e9f0;
+    background-image:  linear-gradient(rgba(0, 0, 255, 0.5), rgba(0, 0, 255, 0.5)),url("/images/BG.png");
+    background-position: center;
+    background-size: cover;
+}
+#title{
+font-size: 10vh;
+margin-top: 5px;
+}
+* {
+	padding: 2px 5px;
+	font-family: 'Segoe UI', 'Roboto', sans-serif;
+	color: #e6e9f0;
+	/* Unified light font color */
+}
+.Container{
+      background-color:linear-gradient(rgba(0, 0, 255, 0.5), rgba(0, 0, 255, 0.5));
+    height: 60%;
+    width: 30vw;
+    border: 2px solid rgb(255, 254, 254,0.7);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    padding: 5px 12px;
+}
+#Title-box{
+     height: 20%;
+    width: 100%;
+     /* border: 2px solid black; */
+     display: flex;
+     justify-content: center;
+     gap: 8vw;
+     position: relative;
+    
+}
+#bar{
+    content: " ";
+    max-height: 3px;
+    width:6vw;
+    top:10vh;
+    right: 4.5vw;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    transition: 1s;
+   
+}
+@keyframes small {
+    0%{width:0vw;}
+    100%{width:6vw;}
+    
+}
+
+#Title-box button{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+}
+#form-conatiner{
+ 
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 8px;
+    overflow: hidden;
+    position: relative;
+}
+.Page{
+    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6%;
+     padding: 2px 4px;
+     position: absolute;
+     transition-duration: 1s;
+
+}
+.input-field {
+  
+    height: 100%;
+    width: 100%;
+      padding: 5px 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+}
+.input-field input{
+     height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    border-color: rgb(196, 196, 196);
+    background-color:rgba(77, 166, 255, 0.5);
+     font-weight: 600;
+     border-color:  #1e3a70;
+     font-size: 1em;
+}
+#Login input{
+     height: 60%;
+    width: 100%;
+   color: #f0f6ff;
+    font-weight: 600;
+    
+}
+input::placeholder {
+  color: #f0f6ff;
+  font-size: 1em;
+  font-weight: 600;
+}
+#Register{
+    transform: translateX(40vw);
+}

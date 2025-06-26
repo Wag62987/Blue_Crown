@@ -1,61 +1,69 @@
-
-
-section{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-h1{
-    color: white;
+section {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-#Class-detail-box{
-    height: 300px;
-    width:30vw;
-    background-color: white;
-    padding: 10px 15px;
-    border-radius: 20px;
-
-}
-*{
-    color: black;
-}
-#Class-detail-box form{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-label{
-    font-weight: 600;
-    color: white;
-}
-input{
-    height: 40px;
-     border: 1px solid #1e3a70;
-     border-radius: 10px;
-}
-.type-box{
-    display: flex;
-}
-.type-box label{
-    display: flex;
-    align-items: center;
+h1 {
+	color: white;
 }
 
-#Class-detail-box{
-    background-color: #102c57; 
-    display: flex;
-    justify-content: center;
-  
+#Class-detail-box {
+	height: 400px;
+	width: 70vw;
+	padding: 0 15px;
+	padding-top: 50px;
+	border-radius: 20px;
+
 }
-#submit-but{
-    height: 50px;
-    font-size: 1.4em;
-    font-weight: 600;
-    background-color: #367bc1;
-    color :white;
+
+* {
+	color: black;
+}
+
+#Class-detail-box form {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 10px;
+	font-size: 20px;
+}
+
+label {
+	font-weight: 600;
+	color: white;
+}
+
+input {
+	height: 40px;
+	border: 1px solid #1e3a70;
+	border-radius: 10px;
+}
+
+.type-box {
+	display: flex;
+}
+
+.type-box label {
+	display: flex;
+	align-items: center;
+}
+
+#Class-detail-box {
+	background-color: #102c57;
+	display: flex;
+	justify-content: center;
+
+}
+
+#submit-but {
+	height: 50px;
+	font-size: 1.4em;
+	font-weight: 600;
+	background-color: #367bc1;
+	color: white;
 }

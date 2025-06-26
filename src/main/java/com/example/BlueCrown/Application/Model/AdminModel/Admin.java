@@ -27,7 +27,6 @@ public class Admin {
 
 
     private String password;
-    private String Role;
    
     @DBRef
     private List<ClassroomModel> classrooms = new ArrayList<>();
@@ -64,10 +63,4 @@ public class Admin {
   	public String toString() {
   		return "AdminModel [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + "]";
   	}
-    public String getRole() {
-        return Role;
-    }
-    public void setRole(String role) {
-        Role = role;
-    }
 }

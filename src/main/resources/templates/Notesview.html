@@ -1,120 +1,127 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org" >
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BlueCrown</title>
-    <link rel="stylesheet" th:href="@{/dashbord.css}" />
-    <link rel="stylesheet" th:href="@{/Notesview.css}">
-</head>
-<body>
-    <div id="Main">
-       <div id="Sidebar">
-            <h1>BlueCrown</h1>
-            <nav>
-                <ul>
-                    <!-- Use single quotes inside onclick to avoid conflicts -->
-                    <li><a href="/Admin/profile">Profile</a></li>
-                    <li><a href="/Admin/CreateClassroom">Createa Classroom</a></li>
-                    <li><a href="/Admin/dashboard">Dashboard</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                </ul>
-            </nav>
-       </div>
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
-       <div id="content">
-        <header><h1 id="selectedOption">notes</h1></header>
-        <!-- Changed iframe to a div for content injection -->
-        <div id="displayContent">
-         <ol id="notes-list">
-         </ol>
-        </div>
-       </div>
-    </div>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>BlueCrown</title>
+	<link rel="stylesheet" th:href="@{/dashbord.css}" />
+	<link rel="stylesheet" th:href="@{/Notesview.css}">
+	<link rel="stylesheet" th:href="@{/Responsive.css}">
+
+</head>
+
+<body>
+	<div id="Main">
+		<div id="Sidebar">
+			<h1>BlueCrown</h1>
+			<nav>
+				<ul>
+					<!-- Use single quotes inside onclick to avoid conflicts -->
+					<li><a href="/Admin/profile">Profile</a></li>
+					<li><a href="/Admin/CreateClassroom">Createa Classroom</a></li>
+					<li><a href="/Admin/dashboard">Dashboard</a></li>
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div id="content">
+			<header>
+				<h1 id="selectedOption">notes</h1>
+			</header>
+			<!-- Changed iframe to a div for content injection -->
+			<div id="displayContent">
+				<ol id="notes-list">
+				</ol>
+			</div>
+		</div>
+	</div>
 
 
 </body>
 <script>
 
 
-    const classroomId="[[${ClassId}]]";
-    console.log(classroomId)
-    fetch(`/Admin/Classroom/${classroomId}/Notes`)
-    .then(response => response.json())
-    .then(data=>{
-        const list=document.getElementById("notes-list");
-    
-         if (!data || data.length === 0) {
-      console.log("empty");
-      
-      list.innerHTML="<h1>No Notes Uploaded yet</h1>";
-      return;
-    }
-            
-            data.forEach(note=>{
-                
-                const item = document.createElement("li");
-                const box1=document.createElement("div");
-                const box2=document.createElement("div");
-                const box3=document.createElement("div");
-                const pdfimg = document.createElement("img");
-                const title = document.createElement("h4");
-                const viewBut=document.createElement("button");
-                const BinImg=document.createElement("img");
-                const BinBut=document.createElement("button");
-                
-                //giving class and id for elements
-                box1.className="box";
-                box2.className="Info-box"
-                box3.className="box";
-                viewBut.className="view-but";
-                viewBut.textContent="View"
-                item.className = "Note";
-                BinBut.id="Bin-but"
-                
+	const classroomId = "[[${ClassId}]]";
+	console.log(classroomId)
+	fetch(`/Admin/Classroom/${classroomId}/Notes`)
+		.then(response => response.json())
+		.then(data => {
+			const list = document.getElementById("notes-list");
 
-                    title.textContent = note.title;
-                    //setting up doc images
-                    if (note.contentType === "application/pdf") {
-                        pdfimg.src = "/images/pdf.png";
-                    }
-                    //Bin image
-                    BinImg.src="/images/Bin.png";
-                    BinBut.addEventListener("click",(e)=>{
-                        e.preventDefault()
-                        fetch(`/Admin/Classroom/${classroomId}/Notes/${note.id}`,{
-                            method:"DELETE",
-                        }).then(data=>{
-                                list.removeChild(item);
-                            console.log("deleted"+note.title);
-                             alert("File deleted successfully.");
-                        })
-                        .catch(error=>{
-                            alert("unabel to delete")
-                        })
-                        
-                    })
-                    //view Button
-                    viewBut.onclick=()=>{
-                        window.location.href=`/Admin/Classroom/${classroomId}/Notes/View/${note.id}`;
+			if (!data || data.length === 0) {
+				console.log("empty");
 
-                    }
-                   
-                    //ading elenets
-                    BinBut.appendChild(BinImg);
-                    box3.appendChild(BinBut)
-                    box2.appendChild(title);
-                    box2.appendChild(pdfimg);
-                    item.appendChild(box3);
-                    item.appendChild(box2);
-                    item.appendChild(box1);
-                    box1.appendChild(viewBut);
+				list.innerHTML = "<h1>No Notes Uploaded yet</h1>";
+				return;
+			}
 
-                    list.appendChild(item);
-                            });
-                    })
-    .catch(console.error("erro in fetching notes"));
+			data.forEach(note => {
 
-   
+				const item = document.createElement("li");
+				const box1 = document.createElement("div");
+				const box2 = document.createElement("div");
+				const box3 = document.createElement("div");
+				const pdfimg = document.createElement("img");
+				const title = document.createElement("h4");
+				const viewBut = document.createElement("button");
+				const BinImg = document.createElement("img");
+				const BinBut = document.createElement("button");
+
+				//giving class and id for elements
+				box1.className = "box";
+				box2.className = "Info-box"
+				box3.className = "box";
+				viewBut.className = "view-but";
+				viewBut.textContent = "View"
+				item.className = "Note";
+				BinBut.id = "Bin-but"
+
+
+				title.textContent = note.title;
+				//setting up doc images
+				if (note.contentType === "application/pdf") {
+					pdfimg.src = "/images/pdf.png";
+				}
+				//Bin image
+				BinImg.src = "/images/Bin.png";
+				BinBut.addEventListener("click", (e) => {
+					e.preventDefault()
+					fetch(`/Admin/Classroom/${classroomId}/Notes/${note.id}`, {
+						method: "DELETE",
+					}).then(data => {
+						list.removeChild(item);
+						console.log("deleted" + note.title);
+						alert("File deleted successfully.");
+					})
+						.catch(error => {
+							alert("unabel to delete")
+						})
+
+				})
+				//view Button
+				viewBut.onclick = () => {
+					window.location.href = `/Admin/Classroom/${classroomId}/Notes/View/${note.id}`;
+
+				}
+
+				//ading elenets
+				BinBut.appendChild(BinImg);
+				box3.appendChild(BinBut)
+				box2.appendChild(title);
+				box2.appendChild(pdfimg);
+				item.appendChild(box3);
+				item.appendChild(box2);
+				item.appendChild(box1);
+				box1.appendChild(viewBut);
+
+				list.appendChild(item);
+			});
+		})
+		.catch(console.error("erro in fetching notes"));
+
+
 </script>
+
 </html>

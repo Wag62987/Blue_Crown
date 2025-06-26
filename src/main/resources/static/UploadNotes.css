@@ -1,44 +1,67 @@
-#content{
-    height: 100%;
-}
-#Notes-upload-box{
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#box{
-    background-color: white;
-    height: 10vh;
-    width:43vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap:10px;
-   border-radius: 20px;
-   padding: 5px 25px 5px 25px
-}
-label{
-     color:  #4da6ff;;
-     font-size: 20px;
-     font-weight: 600;
-}
-input{
-     color:  #4da6ff;
-     font-size: 20px;
-     border-radius: 10px;
-}
-::file-selector-button {
-  border: 2px solid black;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color:  #367bc1;
-  color:white;
+#content {
+	height: 100%;
+	width: 100%;
+
 }
 
-#submit-but{
-    background-color:  #367bc1;
-    color: white;
-    display: flex;
-    align-items: center;
+#Notes-upload-box {
+	height: 80vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#Form-file {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+
+#box {
+	background-color: white;
+	height: 10vh;
+	width: 99%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	border-radius: 20px;
+	padding: 5px 1.6276041666666667vw 5px 1.6276041666666667vw
+}
+
+label {
+	color: #4da6ff;
+	;
+	font-size: 20px;
+	font-weight: 600;
+	width: 100%;
+	background-color: rgb(135, 222, 144);
+}
+
+input {
+	color: #4da6ff;
+	font-size: 20px;
+	width: 100%;
+	border-radius: 10px;
+	background-color: bisque;
+}
+
+::file-selector-button {
+	border: 2px solid black;
+	padding: 5px 10px;
+	border-radius: 5px;
+	background-color: #367bc1;
+	color: white;
+
+}
+
+#submit-but {
+	width: 100%;
+	height: 50px;
+	background-color: #367bc1;
+	color: white;
+	display: flex;
+	align-items: center;
+
 }

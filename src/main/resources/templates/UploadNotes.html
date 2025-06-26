@@ -1,70 +1,79 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org" >
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BlueCrown</title>
-    <link rel="stylesheet" th:href="@{/dashbord.css}" />
-    <link rel="stylesheet" th:href="@{/UploadNotes.css}"/>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>BlueCrown</title>
+	<link rel="stylesheet" th:href="@{/dashbord.css}" />
+	<link rel="stylesheet" th:href="@{/UploadNotes.css}" />
+	<link rel="stylesheet" th:href="@{/Responsive.css}">
+
 </head>
+
 <body>
-    <div id="Main">
-       <div id="Sidebar">
-            <h1>BlueCrown</h1>
-            <nav>
-                <ul>
-                    <!-- Use single quotes inside onclick to avoid conflicts -->
-                    <li><a href="/Admin/profile">Profile</a></li>
-                    <li><a href="/Admin/CreateClassroom">Create Classroom</a></li>
-                    <li><a href="/Admin/dashboard">Dashboard</a></li>
-                   
-                    <li><a href="/logout">Logout</a></li>
-                </ul>
-            </nav>
-       </div>
+	<div id="Main">
+		<div id="Sidebar">
+			<h1>BlueCrown</h1>
+			<nav>
+				<ul>
+					<!-- Use single quotes inside onclick to avoid conflicts -->
+					<li><a href="/Admin/profile">Profile</a></li>
+					<li><a href="/Admin/CreateClassroom">Create Classroom</a></li>
+					<li><a href="/Admin/dashboard">Dashboard</a></li>
 
-       <div id="content">
-        <header><h1 id="selectedOption">Upload Notes</h1></header>
-        <section>
-             <div id="Notes-upload-box">
-                
-            <form id="Form"  required>
-                <div id="box">
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+			</nav>
+			<h1 id="cross" style="color:white">X</h1>
 
-                    <label>Choose the file</label>
-                    <input type="file" name="file" id="File">
-                    
-                     <input type="submit" value="submit"  id="submit-but"> 
-                </div>
-       </form>
-        </div>
-      
-        </section>
-       
-        </div>
-       </div>
-    </div>
+		</div>
+
+		<div id="content">
+			<header>
+				<h1 id="selectedOption">Upload Notes</h1>
+			</header>
+			<section>
+				<div id="Notes-upload-box">
+
+					<form id="Form-file" required>
+						<div id="box">
+
+							<label>Choose the file</label>
+							<input type="file" name="file" id="File">
+
+							<input type="submit" value="submit" id="submit-but">
+						</div>
+					</form>
+				</div>
+
+			</section>
+
+		</div>
+	</div>
+	</div>
 
 
 </body>
 <script>
-    const urlpart=window.location.pathname.split("/");
-    var classroomId=urlpart[3];
-    document.getElementById("Form").addEventListener("submit",(e)=>{
-        e.preventDefault();
-        const formData=new FormData();
-        formData.append("file",document.getElementById("File").files[0])
-        fetch(`/Admin/Classroom/${classroomId}/Notes/UploadNotes`,{
-          method:'POST',
-          body:formData
-        })  .then(data => {
-        console.log("Upload success:", data);
-        alert("File uploaded successfully.");
-    })
-    .catch(error => {
-        console.error("Error uploading file:", error);
-        alert("Failed to upload file.");
-    });
-    })
+	const urlpart = window.location.pathname.split("/");
+	var classroomId = urlpart[3];
+	document.getElementById("Form-file").addEventListener("submit", (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("file", document.getElementById("File").files[0])
+		fetch(`/Admin/Classroom/${classroomId}/Notes/UploadNotes`, {
+			method: 'POST',
+			body: formData
+		}).then(data => {
+			console.log("Upload success:", data);
+			alert("File uploaded successfully.");
+		})
+			.catch(error => {
+				console.error("Error uploading file:", error);
+				alert("Failed to upload file.");
+			});
+	})
 </script>
+
 </html>

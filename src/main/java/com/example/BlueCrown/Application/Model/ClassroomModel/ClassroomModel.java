@@ -2,6 +2,7 @@ package com.example.BlueCrown.Application.Model.ClassroomModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -23,10 +24,17 @@ public class ClassroomModel {
     private String classroomName;
     @NotNull
     private String classroomType;
+    private String joinCode;
     @DBRef
     @Nullable
      private List<NotesModel> NotesList=new ArrayList<>();
 
+    public String getJoinCode() {
+        return joinCode;
+    }
+    public void setJoinCode(String joinCode) {
+        this.joinCode = joinCode;
+    }
     public String getClassroomId() {
         return classroomId;
     }

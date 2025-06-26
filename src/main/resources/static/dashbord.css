@@ -1,137 +1,202 @@
 body {
-    background-color: #0b0f1a; /* Dark navy */
-    color: #e6e9f0; /* Soft white-blue */
-    font-family: 'Segoe UI', 'Roboto', sans-serif;
-    height: auto;
-    max-width: 98vw;
-    padding: 0;
+	background-color: #0b0f1a;
+	/* Dark navy */
+	color: #e6e9f0;
+	/* Soft white-blue */
+	font-family: 'Segoe UI', 'Roboto', sans-serif;
+	height: auto;
+	max-width: 98vw;
+	padding: 0;
+}
+
+div {
+	border-color: 10px solid white;
 }
 
 * {
-    padding: 2px 5px;
-    font-family: 'Segoe UI', 'Roboto', sans-serif;
-    color: #e6e9f0; /* Unified light font color */
+	padding: 2px 5px;
+	font-family: 'Segoe UI', 'Roboto', sans-serif;
+	color: #e6e9f0;
+	/* Unified light font color */
 }
 
 #Main {
-    height: 660px;
-    width: 100%;
-    display: flex;
-    gap:8px;
+	height: 94.96402877697842vh;
+	width: 99%;
+	display: flex;
+	gap: 8px;
+	position: relative;
+	justify-content: center;
+	
 }
+#Slidebar{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap:2vh;
+	position: fixed;
+	top: 0px;
+	font-size: xx-large;
+	display: none;
+	background-color: #2d2d2d;
+	width:97%;
+    /* transform: translateX(500vw);	 */
+	}
+	.cross-box{
+		display: flex;
+		align-items: center;
+		justify-content: right;
+		height: 100px;
+		background-color: #3f3f40;
+		border: 2px solid transparent;
+		border-bottom-color:white;
+		
+	}
+	#Slidebar ul{
+	  display: flex;
+	  flex-direction: column;
+	  gap:13vh;
+	}
+	#Slidebar ul li{
+	  display: flex;
+	  flex-direction: column;
+	  gap:13vh;
+	  border: 2px solid transparent;
+		border-bottom-color:white;
+	}
 
 #Sidebar {
-    height: 660px;
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-    font-size: 25px;
-    background-color: #121a2f; /* Richer dark navy */
-    color: #dce3f0;
-    border-radius: 20px;
+	height: 100%;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	font-size: 25px;
+	background-color: #121a2f;
+	/* Richer dark navy */
+	color: #dce3f0;
+	border-radius: 20px;
+	
+}
+
+#Sidebar h1 {
+	justify-content: center;
+}
+
+#cross {
+	display: none;
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 5vh;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 5vh;
 }
 
 li a {
-    color: #4da6ff; /* Bright blue for links */
-    text-decoration: none;
-    font-weight: 500;
+	color: #4da6ff;
+	/* Bright blue for links */
+	text-decoration: none;
+	font-weight: 500;
 }
 
 #content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 2vh;
 }
 
 #content header {
-    background-color: #1c2431;
-    height: 10%;
-    border-radius: 20px;
-    margin: 3px 2px;
-    display: flex;
-    align-items: center;
-    box-shadow: 2px 2px 10px black;
-    font-size: 20px;
-    font-weight: bold;
+	background-color: #1c2431;
+	height: 10%;
+	border-radius: 20px;
+	margin: 3px 2px;
+	display: flex;
+	align-items: center;
+	box-shadow: 2px 2px 10px black;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #displayContent {
-    height: 86%;
-    width: 100%;
-    /* background-color: white; */
+	height: 86%;
+	width: 100%;
+	/* background-color: white; */
 }
-#Classroom-list{
-    height: 80%;
-    width:98%;
-    /* background-color: greenyellow; */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2vw;
-    overflow-y: scroll;
-    scrollbar-width: none;
+
+#Classroom-list {
+	height: 80%;
+	width: 98%;
+	/* background-color: greenyellow; */
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2vw;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	justify-content: center;
 }
 
 
 #Classroom {
-    max-height: 370px;
-    width: 20vw;
-    background-color: #102c57; /* Deep royal blue */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    border-radius: 10px;
-    font-family: 'Segoe UI', 'Roboto', sans-serif;
-    font-weight: 600;
-    color: #f0f6ff; /* Bright soft blue */
-    border: 1px solid #1e3a70; /* Subtle blue border */
-    flex-grow: 0.5;
+	height: 370px;
+	width: 20vw;
+	background-color: #102c57;
+	/* Deep royal blue */
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+	justify-content: center;
+	border-radius: 10px;
+	font-family: 'Segoe UI', 'Roboto', sans-serif;
+	font-weight: 600;
+	color: #f0f6ff;
+	/* Bright soft blue */
+	border: 1px solid #1e3a70;
+	/* Subtle blue border */
 }
 
 #Classroom-info {
-    display: flex;
-    max-height: 11vh;
-    gap: 9px;
-    justify-content: space-between;
-    padding-left: 26px;
-    background: linear-gradient(to right, #1a3b70, #244e8e); /* Luxurious blue gradient */
-    border-radius: 8px;
-    color: #e6f0ff; /* Soft premium white-blue */
-    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.4);
-    font-weight: 600;
+	display: flex;
+	max-height: 11vh;
+	gap: 9px;
+	justify-content: space-between;
+	padding-left: 26px;
+	background: linear-gradient(to right, #1a3b70, #244e8e);
+	/* Luxurious blue gradient */
+	border-radius: 8px;
+	color: #e6f0ff;
+	/* Soft premium white-blue */
+	box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.4);
+	font-weight: 600;
 }
 
 #Classroom #Classroom-but-box {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 0 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 0 12px;
 }
 
 #Classroom #Classroom-but-box button {
-    height: 50px;
-    border-radius: 10px;
-    background-color: #367bc1; /* Strong royal button */
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
+	height: 50px;
+	border-radius: 10px;
+	background-color: #367bc1;
+	/* Strong royal button */
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 600;
+	border: none;
 }
 
 #Classroom #Classroom-but-box button:hover {
-    background-color: #4d91e2; /* Lighter on hover for interactivity */
+	background-color: #4d91e2;
+	/* Lighter on hover for interactivity */
 }
-#Bin-but{
-    background-color: red;
-    color: white;
+
+#Bin-but {
+	background-color: red;
+	color: white;
 }

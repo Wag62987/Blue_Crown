@@ -13,8 +13,8 @@ public class User {
     private  AdminService adminService;
     
     public  Admin getCurrentUser(){
-        String username=SecurityContextHolder.getContext().getAuthentication().getName();
-              return  adminService.getInfoByUsername(username);
+        String email=SecurityContextHolder.getContext().getAuthentication().getName();
+              return  adminService.getByEmail(email);
 
     }
 }

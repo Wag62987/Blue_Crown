@@ -1,8 +1,8 @@
 package com.example.BlueCrown.Application.service.ClassroomServices;
 
 import java.util.List;
-
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,16 +43,17 @@ public class ClassroomService {
     @Transactional
     public ResponseEntity<?> addClassroom(ClassroomModel classroom) {
       Admin admin=user.getCurrentUser();
+      String joinCode=UUID.randomUUID().toString().substring(0,8);
+      classroom.setJoinCode(joinCode);
       repo.save(classroom); 
       admin.getClassrooms().add(classroom);
-      AdminService.saveAdmin(admin);
+      AdminService.UpdateAdmin(admin);
       return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
     //Delete Classroom
     @Transactional
     public ResponseEntity<?> deleteClassroom(String id) throws ClassroomNotFound{
-    	Admin admin=user.getCurrentUser();
     	ClassroomModel classroom=getClassroomById(id);
     	if(classroom==null) {
     		return new ResponseEntity<>(new ClassroomNotFound("Class not Found !!!"),HttpStatus.NOT_FOUND);
@@ -106,8 +107,7 @@ public class ClassroomService {
     		  	repo.save(classroom);
     			  Nservice.DeleteNote(note);
             find=true;
-            break;
-            
+            break; 
           }   
         }
         if(find=false){
