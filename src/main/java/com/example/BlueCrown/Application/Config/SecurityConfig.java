@@ -1,6 +1,7 @@
 package com.example.BlueCrown.Application.Config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // @Autowired
+    // @Lazy
+    // CustomerDetails customerDetails;
+    @Autowired
+   CustomSuccesHandler customSuccessHandler;
+//    @Autowired
+// public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//     auth.userDetailsService(customerDetails).passwordEncoder(passwordEncoder());
+// }
+
     @Bean
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         http
@@ -23,18 +34,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                  
                                 .requestMatchers("/Admin/auth", "/css/**", "/js/**", "/images/**","/favicon/**").permitAll()
-                                .requestMatchers("/Admin/**", "/Admin/Classroom/**").authenticated()
+                                .requestMatchers("/Admin/**").hasAuthority("ROLE_Admin")
+                                .requestMatchers("/User/**").hasAuthority("ROLE_User")
                                 .anyRequest().authenticated()
+                                
                 )
                 .formLogin(form -> form
-                                .loginPage("/Admin/auth")
+                                .loginPage("/User/auth")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/Admin/dashboard",true)
+                                .successHandler(customSuccessHandler)
                                 .permitAll()
                 )
                 .logout(logout -> logout
                                 .logoutUrl("/logout")
-                                .logoutSuccessUrl("/Admin/Login")
+                                .logoutSuccessUrl("/User/auth")
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
                 )
@@ -49,13 +62,14 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+      @Bean
+public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+            System.out.println("BCryptPasswordEncoder is active!");
         return new BCryptPasswordEncoder();
     }
 }

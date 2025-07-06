@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>BlueCrown</title>
+	<link rel="stylesheet" th:href="@{/dashbord.css}" />
+	<link rel="stylesheet" th:href="@{/CreateClassroom.css}" />
+	<link rel="stylesheet" th:href="@{/Responsive.css}">
+
+</head>
+
+<body>
+	<div id="Main">
+		<div id="Sidebar">
+			<h1>BlueCrown</h1>
+			<nav>
+				<ul>
+					<!-- Use single quotes inside onclick to avoid conflicts -->
+					<li><a href="/Admin/profile">Profile</a></li>
+					<li><a href="/Admin/CreateClassroom">Create Classroom</a></li>
+					<li><a href="/Admin/dashboard">Dashboard</a></li>
+
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+			</nav>
+			<h1 id="cross" style="color:white">X</h1>
+
+		</div>
+
+		<div id="content">
+			<header>
+				<h1 id="selectedOption">Create Classroom</h1>
+			</header>
+			<section>
+				<div id="Class-detail-box">
+
+					<form action="/Admin/Classroom/addClassroom" method="post">
+						<label for="classroomName">Enter Code</label>
+						<input type="text" name="classroomName" required>
+						
+						<input type="submit" value="Join" id="submit-but">
+					</form>
+				</div>
+
+			</section>
+
+		</div>
+	</div>
+	</div>
+
+
+</body>
+<script>
+
+</script>
+
+</html>

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.Model.NotesModel.NotesModel;
 import com.example.BlueCrown.Application.Repository.NotesRepo;
@@ -48,9 +49,8 @@ public class NotesService {
        
     }
     // Geting list of notes as per Classroom
-    public List<NotesModel> getNotelist(String classid) {
-        ClassroomModel classroom =ClassroomService.getClassroomById(classid);
-        if(classroom==null){return null;}
+    public List<NotesModel> getNotelist(String classid) throws ClassroomNotFound {
+        ClassroomModel classroom =ClassroomService.getClassroomByCode(classid);
         return classroom.getNotesList();
     } 
 

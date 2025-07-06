@@ -1,20 +1,19 @@
-package com.example.BlueCrown.Application.Model.AdminModel;
+package com.example.BlueCrown.Application.Model.UserModel;
 
-
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 
 @Document(collection = "adminss")
-@TypeAlias("admin") 
-public class Admin {
+@TypeAlias("Users") 
+public class User {
   
 	@Id
     private String id;
@@ -27,6 +26,7 @@ public class Admin {
 
 
     private String password;
+    private String userType;
    
     @DBRef
     private List<ClassroomModel> classrooms = new ArrayList<>();
@@ -37,9 +37,9 @@ public class Admin {
     public void setClassrooms(List<ClassroomModel> classrooms) {
         this.classrooms = classrooms;
     }
-    public Admin() {
+    public User() {
     }
-    public Admin(String email, String username, String password) {
+    public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -63,4 +63,10 @@ public class Admin {
   	public String toString() {
   		return "AdminModel [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + "]";
   	}
+    public String getUserType() {
+        return userType;
+    }
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 }

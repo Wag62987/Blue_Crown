@@ -1,5 +1,6 @@
 package com.example.BlueCrown.Application.service.ClassroomServices;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -7,17 +8,19 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
-import com.example.BlueCrown.Application.Model.AdminModel.Admin;
+import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomDTO;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.Model.NotesModel.NotesModel;
+import com.example.BlueCrown.Application.Model.UserModel.User;
 import com.example.BlueCrown.Application.Repository.ClassroomRepo;
-import com.example.BlueCrown.Application.Utility.User;
-import com.example.BlueCrown.Application.service.AdminServices.AdminService;
+import com.example.BlueCrown.Application.Utility.CurrentUser;
 import com.example.BlueCrown.Application.service.NotesService.NotesService;
+import com.example.BlueCrown.Application.service.UserServices.UserService;
 
 /*
  * Classroom services
@@ -28,33 +31,74 @@ public class ClassroomService {
    @Autowired
     private ClassroomRepo repo;
     @Autowired
-    private AdminService  AdminService;
+    private UserService  UserService;
     @Autowired
      private NotesService Nservice;
     @Autowired 
-    User user;
+    CurrentUser currentUser;
 
     ///geting All classroom list
-    public List<ClassroomModel> GetAllClassroom(String email){
-      return AdminService.getByEmail(email).getClassrooms();
-    }
+    /// 
+      public List<ClassroomDTO> getUserClassroom(){
+        User User=currentUser.getCurrentUser();
+        List<ClassroomDTO> list=new ArrayList<>();
+        switch(User.getUserType()){
+         case "Admin":
+                      for (ClassroomModel classroom : User.getClassrooms()) {
+                        ClassroomDTO dto =new ClassroomDTO(classroom.getClassroomName(),classroom.getClassroomType(),classroom.getJoinCode(),classroom.getNotesList());
+                      list.add(dto);
+                        }
+         break;
+         case "User":
+                for (ClassroomModel classroom : User.getClassrooms()) {
+                        if(!classroom.getClassroomType().equals("Private")){
+
+                          ClassroomDTO dto =new ClassroomDTO(classroom.getClassroomName(),classroom.getClassroomType(),classroom.getJoinCode(),classroom.getNotesList());
+                      list.add(dto);
+                        }
+                      }
+         break;
+                    }
+          return list;
+                  }
+                    
+                      
+
+  
+    
 
     //Add Clasroom
+     @PreAuthorize("hasRole('Admin')")
     @Transactional
-    public ResponseEntity<?> addClassroom(ClassroomModel classroom) {
-      Admin admin=user.getCurrentUser();
+    public ResponseEntity<?> addClassroom(ClassroomDTO classroomDTO) {
+      User User=currentUser.getCurrentUser();
       String joinCode=UUID.randomUUID().toString().substring(0,8);
-      classroom.setJoinCode(joinCode);
+      ClassroomModel classroom=new ClassroomModel(classroomDTO.getClassroomName(),classroomDTO.getClassroomType(),joinCode);
       repo.save(classroom); 
-      admin.getClassrooms().add(classroom);
-      AdminService.UpdateAdmin(admin);
+      User.getClassrooms().add(classroom);
+     UserService.UpdateUser(User);
       return new ResponseEntity<>(HttpStatus.CREATED);
+
+  }
+   @PreAuthorize("hasRole('User')")
+   @Transactional
+    public ResponseEntity<?> addClassroom(String joincode){
+      User User=currentUser.getCurrentUser();
+      try{
+      ClassroomModel classroom =getClassroomByCode(joincode);
+      User.getClassrooms().add(classroom);
+      UserService.UpdateUser(User);
+      }catch(ClassroomNotFound e){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<>(HttpStatus.FOUND);
   }
 
     //Delete Classroom
+    @PreAuthorize("hasRole('Admin')")
     @Transactional
-    public ResponseEntity<?> deleteClassroom(String id) throws ClassroomNotFound{
-    	ClassroomModel classroom=getClassroomById(id);
+    public ResponseEntity<?> deleteClassroom(String code) throws ClassroomNotFound{
+    	ClassroomModel classroom=getClassroomByCode(code);
     	if(classroom==null) {
     		return new ResponseEntity<>(new ClassroomNotFound("Class not Found !!!"),HttpStatus.NOT_FOUND);
     	}
@@ -67,10 +111,11 @@ public class ClassroomService {
 
     //Upadte Classroom
     @Transactional
-    public ResponseEntity<?> UpdateClassroom(ClassroomModel UpdatedClassroom,String classid){
-           List<NotesModel> notes= getClassroomById(classid).getNotesList();
+    public ResponseEntity<?> UpdateClassroom(ClassroomDTO UpdatedClassroom,String code) throws ClassroomNotFound{
+           List<NotesModel> notes= getClassroomByCode(code).getNotesList();
            UpdatedClassroom.getNotesList().addAll(notes);
-           repo.save(UpdatedClassroom);
+           ClassroomModel classroom=new ClassroomModel(UpdatedClassroom.getClassroomName(),UpdatedClassroom.getClassroomType(),UpdatedClassroom.getJoinCode(),UpdatedClassroom.getNotesList());
+           repo.save(classroom);
            return new ResponseEntity<>(HttpStatus.OK);
     
     }
@@ -83,20 +128,18 @@ public class ClassroomService {
   
 
     //geting Classroom by Classroom ID
-    public ClassroomModel getClassroomById(String id){
-      Optional<ClassroomModel> Class= repo.findById(id); 
+    public ClassroomModel getClassroomByCode(String code) throws ClassroomNotFound{
+      Optional<ClassroomModel> Class= repo.findeByjoinCode(code); 
       if(!Class.isPresent())
-       return null;
+        throw new ClassroomNotFound("Inavlid Code");
+       else{
       ClassroomModel classroom=Class.get();
        return classroom;
+       }
     }
-    public List<ClassroomModel> getUserClassroom(){
-      Admin admin=user.getCurrentUser();
-      return admin.getClassrooms();
-    }
-    public ResponseEntity<?> deleteNote(String ClassId,String NoteId){
+    public ResponseEntity<?> deleteNote(String code,String NoteId) throws ClassroomNotFound{
       boolean find=false;
-    	ClassroomModel classroom=getClassroomById(ClassId);
+    	ClassroomModel classroom=getClassroomByCode(code);
     	if(classroom==null) {
     		return new ResponseEntity<>(new ClassroomNotFound("Class not Found !!!"),HttpStatus.NOT_FOUND);
     	}

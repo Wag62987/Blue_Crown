@@ -15,6 +15,19 @@ body{
 font-size: 10vh;
 margin-top: 5px;
 }
+#title i{
+    text-shadow: 0px 1px rgb(82, 82, 82);
+    text-shadow: 0px 2px rgb(82, 82, 82);
+    text-shadow: 0px 3px rgb(82, 82, 82);
+    text-shadow: 0px 4px rgb(82, 82, 82);
+    text-shadow: 0px 5px  rgb(82, 82, 82);
+    text-shadow: 0px 6px rgb(82, 82, 82);
+    text-shadow: 0px 7px  rgb(82, 82, 82);
+    text-shadow: 0px 8px  rgb(82, 82, 82);
+    text-shadow: 0px 9px rgb(82, 82, 82);
+     text-shadow: 0px 10px rgb(0, 0, 0);
+  
+}
 * {
 	padding: 2px 5px;
 	font-family: 'Segoe UI', 'Roboto', sans-serif;
@@ -49,7 +62,6 @@ margin-top: 5px;
     max-height: 3px;
     width:6vw;
     top:10vh;
-    right: 4.5vw;
     position: absolute;
     background-color: rgb(255, 255, 255);
     transition: 1s;

@@ -94,10 +94,10 @@
 							<img src="" alt="User Photo" />
 						</div>
 						<div class="profile-details">
-							<p><strong>Name:</strong> <span th:text="${Username}"></span></p>
-							<p><strong>Email:</strong> <span th:text="${Email}"></span></p>
-
-							<p><strong>Total Classroom:</strong> <span th:text="${classrooms}"></span></p>
+							<p><strong>Name:</strong> <span id="username"></span></p>
+							<p><strong>Email:</strong> <span id="email"></span></p>
+              <p><strong>Role:</strong> <span id="Role"></span></p>
+							<p><strong>Total Classroom:</strong> <span id="classrooms"></span></p>
 						</div>
 					</div>
 				</div>
@@ -107,5 +107,25 @@
 
 
 </body>
+<script>
+  fetch("/api/user/profile")
+  .then(response =>response.json())
+  .then(data=>{
+    console.log("Data ="+data);
+    const User={
+      username:data.username,
+      email:data.email,
+      role:data.userType,
+      classroomCount:data.classroom
+    };
+    console.log(User);
+    document.getElementById("username").innerText=User.username;
+    document.getElementById("email").innerText=User.email;
+    document.getElementById("Role").innerText=User.role;
+    document.getElementById("classrooms").innerText=User.classroomCount;
 
+  }).catch(error=>{
+    alert("error");
+  })
+</script>
 </html>

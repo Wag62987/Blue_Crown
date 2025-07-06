@@ -10,13 +10,10 @@
 </head>
 <body>
 
-    <h1 id="title"><i>BlueCrown</i></h1>
+    <h1 id="title"><i>Siksha</i></h1>
     <div class="Container">
       
             <div id="Title-box">
-                <div class="heading" id="siginin">
-                    <button id="sign-but" >  <h1>Sign in</h1></button>
-                </div>
                 <div class="heading" id="login">
                     <button id="login-but">
                         <h1>Login</h1>
@@ -26,20 +23,6 @@
             </div>
                 <div id="form-conatiner">
               
-               <form th:action="@{/Admin/auth}" method="post" id="Register" class="Page" th:object="${admin}">
-    <div class="input-field">
-        <input type="text" th:field="*{username}" placeholder="Username" required>
-    </div>
-    <div class="input-field">
-        <input type="email" th:field="*{email}" placeholder="Email" required>
-    </div>
-    <div class="input-field">
-        <input type="password" th:field="*{password}" placeholder="Password" required>
-    </div>
-    <div class="input-field">
-        <input type="submit" value="Register" id="Rgister-sub-but">
-    </div>
-</form>
 
                  <form th:action="@{/login}" method="post" id="Login" class="Page">
                      <div class="input-field">
@@ -55,46 +38,10 @@
                  </div>
             </div>
       
-    </div>
- <script th:inline="javascript">
-       /*<![CDATA[*/
-    let msg = /*[[${Message}]]*/ null;
-    if (msg !== null) {
-        alert(msg);
-    }
-    /*]]>*/
-</script>
-
-
-
+    </div> 
 </body>
 
 <script>
-    const signbut=document.getElementById("sign-but");
-    const Logbut=document.getElementById("login-but");
-    const RegisterPage=document.getElementById("Register");
-    const LoginPage=document.getElementById("Login");
-    const bar=document.getElementById("bar");
-    const RegisSubmit=document.getElementById("Rgister-sub-but")
- 
-   signbut.addEventListener("click",()=>{
-    
-    LoginPage.style.transform="translate(-40vw)"
-    RegisterPage.style.transform="translate(0)"
-    bar.style.transform="translate(-14.2vw)"
-    bar.style.animation = "none"; // remove it
-  void bar.offsetWidth; 
-     bar.style.animation="small 1s ease-out forwards";
-   })
-   Logbut.addEventListener("click",()=>{
-    
-       RegisterPage.style.transform="translate(40vw)"
-       LoginPage.style.transform="translate(0vw)"
-       bar.style.transform="translate(0)";
-       bar.style.animation = "none"; // remove it
-void bar.offsetWidth; 
-        bar.style.animation="small 1s ease-out forwards";
-   })
    
     
 </script>
