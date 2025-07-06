@@ -18,7 +18,9 @@ public interface ClassroomRepo extends MongoRepository<ClassroomModel,String> {
 
     void deleteById(String Id);
 
-    public Optional<ClassroomModel> findeByjoinCode(String id);
+    Optional<ClassroomModel> findByjoinCode(String joincode);
+
+    boolean existsByjoinCode(String joinCode);
 
     
 }

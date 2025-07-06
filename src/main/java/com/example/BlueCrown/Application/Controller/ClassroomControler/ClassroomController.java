@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
 import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomDTO;
-import com.example.BlueCrown.Application.Model.ClassroomModel.ClassroomModel;
 import com.example.BlueCrown.Application.service.ClassroomServices.ClassroomService;
 /*
  * Controller for Classroom
@@ -35,33 +34,39 @@ public class ClassroomController {
    private ClassroomService service;
 
     // geting list of classroom
+  @PreAuthorize("hasRole('Admin','User')")
   @GetMapping()
   public ResponseEntity<List<ClassroomDTO>> getClassroom() {
    
     return ResponseEntity.ok(service.getUserClassroom());
   }
 
-   @PreAuthorize("hasAnyRole('Admin')")
+   @PreAuthorize("hasRole('Admin')")
   @PostMapping()
-  public ResponseEntity<?> addClassroom(@RequestBody ClassroomDTO classroom) {
+  public String addClassroom(@ModelAttribute ClassroomDTO classroom) {
     if(classroom==null){
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return "redirect:/error";
     }else{
       service.addClassroom(classroom);
-     return new ResponseEntity<>(HttpStatus.CREATED);
+     return "redirect:/Admin/dashboard";
     }
+  }
+@PostMapping("/join")
+  public ResponseEntity<?> addClassroomByCode(@ModelAttribute String Joincode) {
+   
+      return service.addClassroom(Joincode);
   }
 
   //Updating classroom
-   @PreAuthorize("hasAnyRole('Admin')")
+   @PreAuthorize("hasRole('Admin')")
   @PutMapping("Upadate/{id}")
-  public ResponseEntity<?> putMethodName(@PathVariable("id") String classid, @RequestBody ClassroomModel classroom) throws ClassroomNotFound {
+  public ResponseEntity<?> putMethodName(@PathVariable("id") String classid, @RequestBody ClassroomDTO classroom) throws ClassroomNotFound {
     if(service.isExist(classid))
       return service.UpdateClassroom(classroom,classid);
       return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
   }
   // Deleting classroom
-   @PreAuthorize("hasAnyRole('Admin')")
+   @PreAuthorize("hasRole('Admin')")
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteClassroom(@PathVariable String id) throws ClassroomNotFound{
   return service.deleteClassroom(id);

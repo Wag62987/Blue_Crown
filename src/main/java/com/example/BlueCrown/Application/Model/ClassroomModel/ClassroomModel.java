@@ -42,6 +42,9 @@ public class ClassroomModel {
         this.joinCode = joinCode;
     }
 
+    public ClassroomModel() {
+    }
+
     public String getJoinCode() {
         return joinCode;
     }

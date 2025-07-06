@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,11 @@ import com.example.BlueCrown.Application.service.UserServices.UserService;
 
 @Service
 public class ClassroomService {
+  
    @Autowired
     private ClassroomRepo repo;
     @Autowired
+    
     private UserService  UserService;
     @Autowired
      private NotesService Nservice;
@@ -129,7 +132,7 @@ public class ClassroomService {
 
     //geting Classroom by Classroom ID
     public ClassroomModel getClassroomByCode(String code) throws ClassroomNotFound{
-      Optional<ClassroomModel> Class= repo.findeByjoinCode(code); 
+      Optional<ClassroomModel> Class= repo.findByjoinCode(code); 
       if(!Class.isPresent())
         throw new ClassroomNotFound("Inavlid Code");
        else{
@@ -163,8 +166,8 @@ public class ClassroomService {
     	}
     	
     }
-    public boolean isExist(String id){
-      if(!repo.existsById(id)){return false;}
+    public boolean isExist(String joinCode){
+      if(!repo.existsByjoinCode(joinCode)){return false;}
     else{return true;}
     }
 

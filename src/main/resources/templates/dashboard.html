@@ -71,10 +71,10 @@
 			else{
 
 			}
-			data.forEach(classroom => {
+			data.forEach(classroomDTO => {
 				const item = document.createElement("li");
 				const box = document.createElement("div");
-				item.innerHTML = `<section id="Classroom-info"><h4>Name: ${classroom.classroomName}</h4><br><h4>Type: ${classroom.classroomType}</h4><br></section>`;
+				item.innerHTML = `<section id="Classroom-info"><h4>Name: ${classroomDTO.classroomName}</h4><br><h4>Type: ${classroomDTO.classroomType}</h4><br></section>`;
 
 				// Create the button for classroom
 				const but1 = document.createElement("button");
@@ -88,27 +88,27 @@
 				but2.textContent = "Upload notes"
 				updateBut.textContent = "Update Classroom"
 				BinBut.textContent = "Delete Classroom"
-				const id = classroom.classroomId;
+				const joinCode = classroomDTO.joinCode;
 
 				but1.onclick = () => {
 					console.log(id);
-					window.location.href = `/Admin/Notesview/${id}`;
+					window.location.href = `/Notesview/${joinCode}`;
 
 				}
 				but2.onclick = () => {
-					window.location.href = `/Admin/Classroom/${id}/Notes/NotesUploading`;
+					window.location.href = `/Classroom/${joinCode}/Notes/NotesUploading`;
 				}
 				updateBut.onclick = () => {
 					console.log("before upadte:" + id)
-					window.location.href = `/Admin/Classroom/Update/${id}`;
+					window.location.href = `/Admin/Classroom/Update/${joinCode}`;
 				}
 				LinkBut.onclick = () => {
 					console.log(id);
-					 navigator.clipboard.writeText(classroom.joinCode);
+					 navigator.clipboard.writeText(classroomDTO.joinCode);
 
 				}
 				BinBut.onclick = () => {
-					fetch(`/Admin/Classrooms/${id}`, {
+					fetch(`/Admin/Classrooms/${joinCode}`, {
 						method: "DELETE"
 					}).then(data => {
 						list.removeChild(item);

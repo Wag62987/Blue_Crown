@@ -45,7 +45,7 @@
 
 	const classroomId = "[[${ClassId}]]";
 	console.log(classroomId)
-	fetch(`/Admin/Classroom/${classroomId}/Notes`)
+	fetch(`/Classroom/${joinCode}/Notes`)
 		.then(response => response.json())
 		.then(data => {
 			const list = document.getElementById("notes-list");

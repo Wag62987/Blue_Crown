@@ -19,6 +19,8 @@ public class ClassroomDTO {
     @DBRef
     @Nullable
      private List<NotesModel> NotesList=new ArrayList<>();
+      public ClassroomDTO() {
+    }
 
     public ClassroomDTO(String classroomName, String classroomType, String joinCode,List<NotesModel> NotesList ) {
         this.classroomName = classroomName;
