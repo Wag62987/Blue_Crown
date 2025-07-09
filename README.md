@@ -1,6 +1,6 @@
 # BlueCrown
 
-**BlueCrown** is a Classroom Management System built using **Spring Boot** and **MySQL**. It allows for creating classrooms, uploading notes, and managing enrollment in a structured and secure environment.
+**BlueCrown** is a Classroom Management System built using **Spring Boot** and **MongoDB**. It allows for creating classrooms, uploading notes, and managing enrollment in a structured and secure environment.
 
 ---
 
