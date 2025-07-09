@@ -41,7 +41,7 @@ BlueCrown/
 
 ### 1. Clone the Project
 ```bash
-git clone https://github.com/your-username/BlueCrown.git
+git clone https://github.com/Wag62987/BlueCrown.git
 
 🧪 Testing
 You can test the backend using:
