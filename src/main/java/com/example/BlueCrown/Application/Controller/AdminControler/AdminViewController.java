@@ -23,7 +23,7 @@ import com.example.BlueCrown.Application.service.UserServices.UserService;
 
 
 @Controller // Converts all responses to JSON
-@RequestMapping({"/Admin", "/User"})
+@RequestMapping({"/Admin", "/User","/Classroom"})
 public class AdminViewController {
     @Autowired
 	 private UserService service;
@@ -54,9 +54,9 @@ public class AdminViewController {
             return"profile";
         }
         @PreAuthorize("hasAnyRole('Admin','User')")
-        @GetMapping("/Notesview/{id}")
+        @GetMapping("{id}/Notesview")
         public String notesview(@PathVariable("id") String classId,Model model) {
-          model.addAttribute("ClassId", classId);
+          model.addAttribute("joinCode", classId);
             return "Notesview";
         }
         @PreAuthorize("hasAnyRole('Admin')")
@@ -64,10 +64,22 @@ public class AdminViewController {
         public String createClassroom() {
             return "CreateClassroom";
         }
+        @PreAuthorize("hasAnyRole('Admin')")
+        @GetMapping("/UpdateClassroom/{joinCode}")
+        public String UpdateClassroom(@PathVariable("joinCode") String joincode,Model model) {
+          model.addAttribute("joinCode", joincode);
+            return "UpdateClassroom";
+        }
         @PreAuthorize("hasAnyRole('User')")
          @GetMapping("/JoinClassroom")
         public String SearchClassroom() {
-            return "SerachClassroom";
+            return "SearchClassroom";
+        }
+        @PreAuthorize("hasAnyRole('Admin')")
+         @GetMapping("/{Code}/UploadNotes")
+        public String UploadNotes(@PathVariable("Code") String code,Model model) {
+          model.addAttribute("Code",code);
+            return "UploadNotes";
         }
      
         

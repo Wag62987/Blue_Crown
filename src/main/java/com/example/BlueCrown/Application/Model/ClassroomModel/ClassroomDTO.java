@@ -15,6 +15,7 @@ public class ClassroomDTO {
     private String classroomName;
     @NotNull
     private String classroomType;
+    
     private String joinCode;
     @DBRef
     @Nullable

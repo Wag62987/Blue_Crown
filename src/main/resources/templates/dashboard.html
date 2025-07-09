@@ -59,7 +59,7 @@
 </body>
 <script>
 	const notes = undefined;
-	fetch("/Admin/Classrooms")
+	fetch("/Classrooms")
 		.then(response => response.json())
 		.then(data => {
 			const list = document.getElementById("Classroom-list");
@@ -91,16 +91,15 @@
 				const joinCode = classroomDTO.joinCode;
 
 				but1.onclick = () => {
-					console.log(id);
-					window.location.href = `/Notesview/${joinCode}`;
+					console.log(joinCode);
+					window.location.href = `/Classroom/${joinCode}/Notesview`;
 
 				}
 				but2.onclick = () => {
-					window.location.href = `/Classroom/${joinCode}/Notes/NotesUploading`;
+					window.location.href = `/Admin/${joinCode}/UploadNotes`;
 				}
 				updateBut.onclick = () => {
-					console.log("before upadte:" + id)
-					window.location.href = `/Admin/Classroom/Update/${joinCode}`;
+					window.location.href = `/Admin/UpdateClassroom/${joinCode}`;
 				}
 				LinkBut.onclick = () => {
 					console.log(id);
@@ -108,6 +107,7 @@
 
 				}
 				BinBut.onclick = () => {
+					alert(joinCode);
 					fetch(`/Admin/Classrooms/${joinCode}`, {
 						method: "DELETE"
 					}).then(data => {

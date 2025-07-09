@@ -43,9 +43,8 @@
 <script>
 
 
-	const classroomId = "[[${ClassId}]]";
-	console.log(classroomId)
-	fetch(`/Classroom/${joinCode}/Notes`)
+	const joinCode = "[[${joinCode}]]";
+	fetch(`/${joinCode}/Notes`)
 		.then(response => response.json())
 		.then(data => {
 			const list = document.getElementById("notes-list");
@@ -88,7 +87,7 @@
 				BinImg.src = "/images/Bin.png";
 				BinBut.addEventListener("click", (e) => {
 					e.preventDefault()
-					fetch(`/Admin/Classroom/${classroomId}/Notes/${note.id}`, {
+					fetch(`/${joinCode}/Notes/${note.id}`, {
 						method: "DELETE",
 					}).then(data => {
 						list.removeChild(item);
@@ -102,7 +101,7 @@
 				})
 				//view Button
 				viewBut.onclick = () => {
-					window.location.href = `/Admin/Classroom/${classroomId}/Notes/View/${note.id}`;
+					window.location.href = `/${joinCode}/Notes/View/${note.id}`;
 
 				}
 

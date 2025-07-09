@@ -31,13 +31,14 @@ public class NotesService {
    
     //Adding new Notes
     @Transactional
-    public ResponseEntity<?> saveNotes(NotesModel notes, ClassroomModel classroom)
+    public ResponseEntity<?> saveNotes(NotesModel notes, ClassroomModel classroom) throws ClassroomNotFound
     {  
         if(classroom==null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
         else{
             notesRepo.save(notes);
             classroom.getNotesList().add(notes);
-            ClassroomService.UpdateClassroom(classroom);
+            String JoinCode=classroom.getJoinCode();
+            ClassroomService.UpdateClassroom(classroom,JoinCode);
             return new ResponseEntity<>(HttpStatus.CREATED);
             }
     }

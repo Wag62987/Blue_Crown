@@ -56,15 +56,15 @@
 
 </body>
 <script>
-	const urlpart = window.location.pathname.split("/");
-	var classroomId = urlpart[3];
+	const Code = "[[${Code}]]";
+
 	document.getElementById("Form-file").addEventListener("submit", (e) => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append("file", document.getElementById("File").files[0])
-		fetch(`/Admin/Classroom/${classroomId}/Notes/UploadNotes`, {
+		fetch(`/${Code}/Notes/UploadNotes`, {
 			method: 'POST',
-			body: formData
+			body:formData
 		}).then(data => {
 			console.log("Upload success:", data);
 			alert("File uploaded successfully.");

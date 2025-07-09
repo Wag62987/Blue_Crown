@@ -27,7 +27,7 @@ import com.example.BlueCrown.Application.service.ClassroomServices.ClassroomServ
 @CrossOrigin(value="*")
 @RestController
 
-@RequestMapping({"/Admin/Classrooms","/User/Classrooms"})
+@RequestMapping({"/Classrooms"})
 public class ClassroomController {
 
   @Autowired
@@ -43,12 +43,12 @@ public class ClassroomController {
 
    @PreAuthorize("hasRole('Admin')")
   @PostMapping()
-  public String addClassroom(@ModelAttribute ClassroomDTO classroom) {
+  public ResponseEntity<?> addClassroom(@RequestBody ClassroomDTO classroom) {
     if(classroom==null){
-      return "redirect:/error";
+      return new ResponseEntity<>(HttpStatus.OK);
     }else{
       service.addClassroom(classroom);
-     return "redirect:/Admin/dashboard";
+     return new ResponseEntity<>(HttpStatus.OK);
     }
   }
 @PostMapping("/join")
@@ -59,14 +59,16 @@ public class ClassroomController {
 
   //Updating classroom
    @PreAuthorize("hasRole('Admin')")
-  @PutMapping("Upadate/{id}")
+  @PutMapping("Update/{id}")
   public ResponseEntity<?> putMethodName(@PathVariable("id") String classid, @RequestBody ClassroomDTO classroom) throws ClassroomNotFound {
-    if(service.isExist(classid))
+    if(service.isExist(classid)){
+
       return service.UpdateClassroom(classroom,classid);
+    }
       return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
   }
   // Deleting classroom
-   @PreAuthorize("hasRole('Admin')")
+  @PreAuthorize("hasRole('Admin')")
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteClassroom(@PathVariable String id) throws ClassroomNotFound{
   return service.deleteClassroom(id);

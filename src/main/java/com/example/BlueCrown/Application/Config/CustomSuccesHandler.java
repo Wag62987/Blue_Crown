@@ -18,7 +18,6 @@ public class CustomSuccesHandler implements AuthenticationSuccessHandler{
             Authentication authentication) throws IOException, ServletException {
         // TODO Auto-generated method stub
         String Userrole= authentication.getAuthorities().iterator().next().getAuthority();
-        System.out.println("Role"+Userrole);
         if(Userrole.equals("ROLE_Admin")){
             response.sendRedirect("/Admin/dashboard");
         }

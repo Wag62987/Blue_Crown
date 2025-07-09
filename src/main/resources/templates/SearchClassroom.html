@@ -18,9 +18,9 @@
 			<nav>
 				<ul>
 					<!-- Use single quotes inside onclick to avoid conflicts -->
-					<li><a href="/Admin/profile">Profile</a></li>
-					<li><a href="/Admin/CreateClassroom">Create Classroom</a></li>
-					<li><a href="/Admin/dashboard">Dashboard</a></li>
+					<li><a href="/User/profile">Profile</a></li>
+					<li><a href="/User/JoinClassroom">Join Classroom</a></li>
+					<li><a href="/User/dashboard">Dashboard</a></li>
 
 					<li><a href="/logout">Logout</a></li>
 				</ul>
@@ -36,9 +36,9 @@
 			<section>
 				<div id="Class-detail-box">
 
-					<form action="User/Classrooms/join" method="post">
+					<form  onsubmit="return JoinClassroom(event)">
 						<label for="classroomName">Enter Code</label>
-						<input type="text" name="Joincode" required>
+						<input type="text" name="Joincode" id="Joincode" required>
 						
 						<input type="submit" value="Join" id="submit-but">
 					</form>
@@ -53,7 +53,30 @@
 
 </body>
 <script>
-
+function JoinClassroom(event){
+	 event.preventDefault();
+	const joinCode=document.getElementById("Joincode").value;
+	fetch("/api/user/join", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(joinCode)
+})
+.then(response => {
+    if (response.status === 404) {
+        alert("Not found");
+        window.location.href = "/User/dashboard";
+    } else {
+        alert("Join Successfully");
+        window.location.href = "/User/dashboard";
+    }
+})
+.catch(error => {
+    console.log("Error:", error);
+});
+	
+}
 </script>
 
 </html>

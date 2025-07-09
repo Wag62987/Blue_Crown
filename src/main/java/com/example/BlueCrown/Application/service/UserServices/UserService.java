@@ -60,8 +60,6 @@ public UserDetails loadUserByUsername(String email) {
     
 
     User user = getByEmail(email);
-    System.out.println(user);
- System.out.println("UserType: "+user.getUserType());
     return org.springframework.security.core.userdetails.User.builder()
         .username(user.getEmail())
         .password(user.getPassword())
@@ -70,11 +68,9 @@ public UserDetails loadUserByUsername(String email) {
 }
 
     public void UpdateUser(User User) {
-      if(Repo.existsById(User.getId())){
+    
          Repo.save(User);
-      }else{
-         throw new AdminNotFound("User Not Found");
-      }
+      
     }
 }
 

@@ -140,15 +140,16 @@ li a {
 
 
 #Classroom {
-	height: 370px;
+	min-height: 100px;
+	max-height: 390px;
 	width: 20vw;
 	background-color: #102c57;
 	/* Deep royal blue */
 	display: flex;
 	flex-direction: column;
-	gap: 15px;
+	gap: 18px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-	justify-content: center;
+	justify-content: space-evenly;
 	border-radius: 10px;
 	font-family: 'Segoe UI', 'Roboto', sans-serif;
 	font-weight: 600;

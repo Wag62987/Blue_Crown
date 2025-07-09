@@ -32,7 +32,7 @@
 <!-- <div class="content-box">
         <div class="profile-section">
           <div class="profile-image">
-            <img src="" alt="User Photo" />
+            <img src= alt="User Photo" />
           </div>
           <div class="profile-details">
            <p><strong>Name:</strong> <span th:text="${username}"></span></p>
@@ -91,7 +91,7 @@
 				<div class="content-box">
 					<div class="profile-section">
 						<div class="profile-image">
-							<img src="" alt="User Photo" />
+							
 						</div>
 						<div class="profile-details">
 							<p><strong>Name:</strong> <span id="username"></span></p>
@@ -123,6 +123,8 @@
     document.getElementById("email").innerText=User.email;
     document.getElementById("Role").innerText=User.role;
     document.getElementById("classrooms").innerText=User.classroomCount;
+  const profileBox = document.getElementsByClassName("profile-image")[0];
+profileBox.innerText = User.username.charAt(0).toUpperCase();
 
   }).catch(error=>{
     alert("error");

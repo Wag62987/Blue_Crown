@@ -59,7 +59,7 @@
 </body>
 <script>
 	const notes = undefined;
-	fetch("/Admin/Classrooms")
+	fetch("/Classrooms")
 		.then(response => response.json())
 		.then(data => {
 			const list = document.getElementById("Classroom-list");
@@ -71,44 +71,29 @@
 			else{
 
 			}
-			data.forEach(classroom => {
+			data.forEach(classroomDTO => {
 				const item = document.createElement("li");
 				const box = document.createElement("div");
-				item.innerHTML = `<section id="Classroom-info"><h4>Name: ${classroom.classroomName}</h4><br><h4>Type: ${classroom.classroomType}</h4><br></section>`;
+				item.innerHTML = `<section id="Classroom-info"><h4>Name: ${classroomDTO.classroomName}</h4><br><h4>Type: ${classroomDTO.classroomType}</h4><br></section>`;
 
 				// Create the button for classroom
 				const but1 = document.createElement("button");
-				const but2 = document.createElement("button");
 				const updateBut = document.createElement("button");
 				const BinBut = document.createElement("button");
-				const LinkBut=document.createElement("button");
 
 				but1.textContent = "view Notes";
-				LinkBut.textContent="Copy Code";
-				but2.textContent = "Upload notes"
-				updateBut.textContent = "Update Classroom"
-				BinBut.textContent = "Delete Classroom"
-				const id = classroom.classroomId;
+				BinBut.textContent = "leave Classroom"
+				const joinCode = classroomDTO.joinCode;
 
 				but1.onclick = () => {
-					console.log(id);
-					window.location.href = `/Admin/Notesview/${id}`;
+					console.log(joinCode);
+					window.location.href = `/Classroom/${joinCode}/Notesview`;
 
 				}
-				but2.onclick = () => {
-					window.location.href = `/Admin/Classroom/${id}/Notes/NotesUploading`;
-				}
-				updateBut.onclick = () => {
-					console.log("before upadte:" + id)
-					window.location.href = `/Admin/Classroom/Update/${id}`;
-				}
-				LinkBut.onclick = () => {
-					console.log(id);
-					 navigator.clipboard.writeText(classroom.joinCode);
-
-				}
+			
 				BinBut.onclick = () => {
-					fetch(`/Admin/Classrooms/${id}`, {
+					alert(joinCode);
+					fetch(`/Admin/Classrooms/${joinCode}`, {
 						method: "DELETE"
 					}).then(data => {
 						list.removeChild(item);
@@ -127,9 +112,6 @@
 				BinBut.style.backgroundColor = "red";
 				
 				box.appendChild(but1);
-				box.appendChild(but2);
-				box.appendChild(LinkBut);
-				box.appendChild(updateBut);
 				box.appendChild(BinBut);
 				
 				item.appendChild(box)
@@ -142,7 +124,6 @@
 		});
 
 	console.log(notes);
-
 </script>
 
 </html>

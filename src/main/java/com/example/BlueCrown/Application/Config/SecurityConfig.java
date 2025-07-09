@@ -9,9 +9,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -50,13 +53,14 @@ public class SecurityConfig {
                                 .logoutSuccessUrl("/User/auth")
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
+                                .deleteCookies("JSESSIONID")
                 )
-                .sessionManagement(session -> session
-                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                                .sessionFixation().migrateSession()
-                                .maximumSessions(1)
-                                .maxSessionsPreventsLogin(true)
-            
+               .sessionManagement(session -> session
+    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+    .maximumSessions(1)
+    .maxSessionsPreventsLogin(true)
+    .sessionRegistry(sessionRegistry())
+
                 );
 
         return http.build();
@@ -69,7 +73,14 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration c
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-            System.out.println("BCryptPasswordEncoder is active!");
         return new BCryptPasswordEncoder();
     }
+    @Bean
+public SessionRegistry sessionRegistry() {
+    return new SessionRegistryImpl();
+}
+@Bean
+public static HttpSessionEventPublisher httpSessionEventPublisher() {
+    return new HttpSessionEventPublisher();
+}
 }

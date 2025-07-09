@@ -24,6 +24,7 @@ public class ClassroomModel {
     private String classroomName;
     @NotNull
     private String classroomType;
+    @NotNull
     private String joinCode;
     @DBRef
     @Nullable
@@ -79,11 +80,25 @@ public class ClassroomModel {
   public void ClearNotesList() {
         NotesList.removeAll(NotesList);
     }
-    @Override
-    public String toString() {
-        return "ClassroomModel [classroomId=" + classroomId + ", classroomName=" + classroomName + ", classroomType="
-                + classroomType + "]";
-    }
+
+  @Override
+  public String toString() {
+    return "ClassroomModel [classroomId=" + classroomId + ", classroomName=" + classroomName + ", classroomType="
+            + classroomType + ", joinCode=" + joinCode + ", NotesList=" + NotesList + "]";
+  }
+  @Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ClassroomModel that = (ClassroomModel) o;
+    return classroomId != null && classroomId.equals(that.classroomId);
+}
+
+@Override
+public int hashCode() {
+    return classroomId != null ? classroomId.hashCode() : 0;
+}
+   
   
     
 }

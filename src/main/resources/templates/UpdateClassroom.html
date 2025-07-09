@@ -75,16 +75,16 @@
 				break;
 			}
 		}
-		const classroomId = "[[${id}]]";
+		const code = "[[${joinCode}]]";
 		const notes = null;
 
 		const classroom = {
-			classroomId: classroomId,
+			joinCode: code,
 			classroomName: classroomName,
 			classroomType: selectedValue,
 			notes: notes
 		}
-		fetch(`/Admin/Classrooms/${classroomId}`, {
+		fetch(`/Classrooms/Update/${code}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -92,7 +92,7 @@
 			body: JSON.stringify(classroom)
 		}).then(data => {
 			alert(JSON.stringify(classroom));
-			alert("Updated" + classroomId)
+			alert("Updated" + code)
 		}).catch(error => {
 			alert("Enable to update")
 		})

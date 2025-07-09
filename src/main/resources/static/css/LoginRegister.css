@@ -1,6 +1,7 @@
 body{
     height: 650px;
     width:98vw;
+    min-width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,6 +39,7 @@ margin-top: 5px;
       background-color:linear-gradient(rgba(0, 0, 255, 0.5), rgba(0, 0, 255, 0.5));
     height: 60%;
     width: 30vw;
+    min-width: 230px;
     border: 2px solid rgb(255, 254, 254,0.7);
     border-radius: 10px;
     display: flex;

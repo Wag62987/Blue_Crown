@@ -30,8 +30,8 @@ import com.example.BlueCrown.Application.Exceptions.ClassroomNotFound;
  */
 
 @RestController
-
-@RequestMapping("/Classroom/{ClassroomId}/Notes")
+@PreAuthorize("hasRole('Admin')")
+@RequestMapping("/{ClassroomId}/Notes")
 public class NotesControler {
 
     @Autowired
@@ -58,15 +58,11 @@ public class NotesControler {
     //Geting list of notes of Classroom
      @PreAuthorize("hasAnyRole('Admin','User')")
     @GetMapping()
-    public ResponseEntity<List<NotesModel>> getAllNotes(@PathVariable("ClassroomId") String classId) throws ClassroomNotFound{
-      List<NotesModel> list=new ArrayList<>();
-      if((list=service.getNotelist(classId) )!=null){
-
+    public ResponseEntity<List<NotesModel>> getAllNotes(@PathVariable("ClassroomId") String code) throws ClassroomNotFound{
+      List<NotesModel>   list=service.getNotelist(code);
         return ResponseEntity.ok(list);
-      }
-      else{
-        return ResponseEntity.ok(list);
-      }
+      
+     
     }
   
     //Deleting of notes 
@@ -86,9 +82,9 @@ public ResponseEntity<byte[]> viewNote(@PathVariable("ClassroomId") String class
         return ResponseEntity.notFound().build();
     }
 
-    return ResponseEntity.ok()
-        .header("Content-Disposition", "inline; filename=\"" + note.getTitle() + "\"")
-        .header("Content-Type", note.getContentType())
-        .body(note.getData());
+       return ResponseEntity.ok()
+    .header("Content-Disposition", "inline; filename=\"" + note.getTitle() + "\"")
+    .header("Content-Type", note.getContentType())
+    .body(note.getData());
 }
 }
