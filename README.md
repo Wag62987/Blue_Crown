@@ -1,6 +1,6 @@
-# BlueCrown
+# Siksha
 
-**BlueCrown** is a Classroom Management System built using **Spring Boot** and **MongoDB**. It allows for creating classrooms, uploading notes, and managing enrollment in a structured and secure environment.
+**Siksha** is a Classroom Management System built using **Spring Boot** and **MongoDB**. It allows for creating classrooms, uploading notes, and managing enrollment in a structured and secure environment.
 
 ---
 
@@ -41,7 +41,7 @@ BlueCrown/
 
 ### 1. Clone the Project
 ```bash
-git clone https://github.com/Wag62987/BlueCrown.git
+git clone https://github.com/Wag62987/Siksha.git
 
 🧪 Testing
 You can test the backend using:
